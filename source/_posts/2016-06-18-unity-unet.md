@@ -1,3 +1,14 @@
+---
+date: 2016-06-18 14:08:25+00:00
+title: Unity UNet用法
+categories:
+- 技术
+- Unity
+tags:
+- Unity
+- network
+---
+
 # Unity UNet用法
 
 UNet是Unity设计的网络多人游戏模块，特点是与Unity高度集成，使用非常方便，可以快速制作多人游戏原型。根据使用需求来分提供两种功能：

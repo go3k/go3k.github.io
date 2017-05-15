@@ -1,5 +1,4 @@
 ---
-author: omega.yue
 comments: true
 date: 2012-08-28 14:08:25+00:00
 layout: post
@@ -25,5 +24,3 @@ categories:
 申请了go3k.org这个域名，目前还在备案中。先用买虚拟主机送的免费域名玩玩Wordpress。
 
 哥写文章还真是意识流，这都哪跟哪啊。
-
-
