@@ -1,3 +1,15 @@
+---
+date: 2016-01-11 14:08:25+00:00
+title: 游戏答案
+categories:
+- 游戏
+- 生活
+tags:
+- 解谜游戏
+- puzzle game
+- 创意
+---
+
 故事是这样的，游戏前期我故意给身边同事的桌上放了这个：
 
 {<1>}![answer1](http://7jppsr.com1.z0.glb.clouddn.com/img%2Fanswer2.jpg)
