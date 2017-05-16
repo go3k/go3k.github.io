@@ -159,7 +159,7 @@ qrcode: false
 # The new src will have the base domain you configured in 'base'.
 materialcdn:
     use: true
-    base: "https://cdn.bootcss.com/"
+    base: "http://oq1uojjvq.bkt.clouddn.com/cdn"
 
 # Comment Systems
 # Available value of "use":
