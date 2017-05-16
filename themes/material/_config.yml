@@ -158,8 +158,8 @@ qrcode: false
 # When you set 'use' as true, the needed css, js, font file will have a new src.
 # The new src will have the base domain you configured in 'base'.
 materialcdn:
-    use:
-    base:
+    use: true
+    base: "https://cdn.bootcss.com/"
 
 # Comment Systems
 # Available value of "use":
