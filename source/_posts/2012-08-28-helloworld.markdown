@@ -4,7 +4,6 @@ date: 2012-08-28 14:08:25+00:00
 layout: post
 slug: helloworld
 title: 总算是开通了个人网站，HelloWorld!
-wordpress_id: 6
 categories:
 - 未分类
 ---

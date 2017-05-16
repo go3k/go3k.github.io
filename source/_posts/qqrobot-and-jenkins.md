@@ -1,4 +1,13 @@
-# QQ机器人和Jenkins插件编写
+---
+date: 2015-05-18 14:08:25+00:00
+title: QQ机器人和Jenkins插件编写
+categories:
+- 技术
+tags:
+- Jenkins
+- QQ机器人
+- 效率
+---
 
 Jenkins是一个有名的可持续集成工具，使用现有的插件就可以很容易的搭建一个软件自动集成环境。
 

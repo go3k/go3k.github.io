@@ -1,15 +1,13 @@
 ---
-author: omega.yue
 comments: true
 date: 2012-09-03 13:56:24+00:00
 layout: post
 slug: mac-cocos2dx-envconfig
 title: Mac下Cocos2d-x Android开发环境配置
-wordpress_id: 10
 categories:
-- Cocos2d-x
+- 技术
 tags:
-- cocos2d-x
+- cocos2d
 ---
 
 ## 资源准备
@@ -30,9 +28,9 @@ coco2d-x source Code
 3. 安装Android SDK
 
 	下载的安装包解压到自己指定的目录，打开sdk目录/tools/android，会启动Android SDK Manager，下载一个版本的SDK安装即可。
-	
+
 	插曲:感谢伟大的GFW，一般来说这个下载是会卡住连不上的。改hosts，加入:
-	
+
 		74.125.237.1 dl-ssl.google.com
 
 4. 解压Android NDK
@@ -40,7 +38,7 @@ coco2d-x source Code
 	配置环境变量
 
 	需要配置的环境变量如下:
-	
+
 		export ANDROID_SDK_ROOT="你的sdk目录"
 		export ANDROID_NDK_ROOT="你的ndk目录"
 		export COCOS2DX_ROOT="你的cocos2d-x目录"
@@ -49,12 +47,12 @@ coco2d-x source Code
 		export PATH=$PATH:$ANDROID_NDK_ROOT
 
 	这里依照Unix环境配置方法，修改/etc/profile或.bash_profile，可能需要加权限，使用Emacs或其它编译器填写上面环境变量定义。重启Shell终端，让环境变量生效。
-	
+
 5. 安装ADT
 	同样Eclipse，Help->Install New SoftWare中，add新的Repository，地址为
-		
+
 		https://dl-ssl.google.com/android/eclipse
-		
+
 	把pendding出来的包都装上就OK。
 
 ## 环境安装配置完成
@@ -115,5 +113,3 @@ cocos2d-x工程代码文件或目录有添加时，一定要修改Android.mk的L
 3. 如何把XCode中完成的工程移植到Andriod?
 
 	这是个大问题，但也并不麻烦，需要细心。只需要:按照如上步骤正常的配置好Android环境。注意上面两个问题。分析编译过程中的错误log，修改部分代码。耐心调试，一点一点完成移植。
-
-

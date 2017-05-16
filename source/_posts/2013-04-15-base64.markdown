@@ -1,13 +1,12 @@
 ---
-author: omega.yue
 comments: true
 date: 2013-04-15 03:12:16+00:00
 layout: post
 slug: base64-encode
 title: Base64编码
-wordpress_id: 248
 categories:
 - 技术
+tags:
 - 数据结构与算法
 ---
 
@@ -48,11 +47,11 @@ Base64编码规则为：
 
 	转换前： aaaaaabb ccccdddd eeffffff
 	转换后： 00aaaaaa 00bbcccc 00ddddee 00ffffff
-	
+
 ##URL参数使用Base64
 
 RFC 1738中规定：
 > "…Only alphanumerics [0-9a-zA-Z], the special characters "$-_.+!*'(),"
 >[not including the quotes - ed], and reserved characters used for their reserved purposes may be used unencoded within a URL."
 >“只有字母和数字[0-9 a-z A-Z]、一些特殊符号“$-_.+!*'(),”[不包括双引号]、以及某些保留字，才可以不经过编码直接用于URL。”
-可采用一种用于URL的改进Base64编码，它不在末尾填充'='号，并将标准Base64中的“+”和“/”分别改成了“-”和“_”，这样就免去了在URL编解码和数据库存储时所要作的转换，避免了编码信息长度在此过程中的增加，并统一了数据库、表单等处对象标识符的格式。
+可采用一种用于URL的改进Base64编码，它不在末尾填充'='号，并将标准Base64中的“+”和“/”分别改成了“-”和“_”，这样就免去了在URL编解码和数据库存储时所要作的转换，避免了编码信息长度在此过程中的增加，并统一了数据库、表单等处对象标识符的格式。

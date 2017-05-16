@@ -1,13 +1,11 @@
 ---
-author: omega.yue
 comments: true
 date: 2013-01-13 12:41:28+00:00
 layout: post
 slug: looking-forward
 title: 停下来向前看看路
-wordpress_id: 79
 categories:
-- 随笔
+- 心情
 ---
 
 博客开通半年时间了，一直没怎么折腾，都快荒废了。
@@ -37,9 +35,3 @@ categories:
 看到用Github搭建博客的方案，感觉很好玩，有时间整一个，玩玩全英文博客。。。
 
 目前英文水平又从0开始了，好久没看过英文资料，Facebook太长时间没上过了，练习练习。
-
-
-
-
-
-

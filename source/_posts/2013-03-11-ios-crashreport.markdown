@@ -1,17 +1,13 @@
 ---
-author: omega.yue
 comments: true
 date: 2013-03-11 07:45:21+00:00
-layout: post
-slug: '%e5%a4%84%e7%90%86%e3%80%81%e5%88%86%e6%9e%90ios-app%e7%9a%84crash-reports-3'
 title: 处理、分析iOS App的Crash Reports
-wordpress_id: 191
 categories:
-- Cocos2d-x
-- iOS
+- 心情
 tags:
 - crash report
 - iOS
+- cocos2d
 ---
 ##应用被Reject
 很不幸，首次的AppStore应用提交失败了。其中一个原因是：游戏中发生Crash。
@@ -59,13 +55,13 @@ iOS设备上，当app崩溃时会创建一个"crash report"文件保存在设备
 
 最后在github上找到这样的一个回复：
 
-> If you goto Xcode->Organizer click on archives then right-click any archive and 
+> If you goto Xcode->Organizer click on archives then right-click any archive and
 select show in finder. Back up to the folder called Xcode that contains the archive. Run terminal and cd to this folder, you can do this easily by typing 'cd ' then dragging the folder to the terminal. Now type 'mdimport .' and enter. This will take a minute to finish. If you go back to Organizer and find your crash file then press Re-Symbolicate it should now give you method names and line numbers.
 
 按照他的方法操作了一次，居然就成功了。找到Archive操作的.app与.dSYM所在目录，一般是/Users/用户名/Library/Developer/Xcode/Archives(可以在Organizer Archives中，右击Archive包进入)，命令行中cd到/Users/用户名/Library/Developer/Xcode/，输入命令：
-	
+
 	mdimport .
-	
+
 意为，把Xcode目录加入到spotlight索引，这可能需要一些时间，等一等。
 
 也可以只导入你需要的.app与.dSYM文件，这样比较快速。
@@ -89,4 +85,3 @@ select show in finder. Back up to the folder called Xcode that contains the arch
 
 ##我的结果
 经过反复测试，发现崩溃原因是，cocos2d-x引擎的CCBReader扩展中文件读取时，其中有一个操作没有考虑ARM下内存对齐，崩溃并Exception Codes: EXC_ARM_DA_ALIGN。Github上找到新版源码，问题就修复了。
-

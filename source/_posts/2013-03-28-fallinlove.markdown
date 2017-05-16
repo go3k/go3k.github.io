@@ -1,16 +1,13 @@
 ---
-author: omega.yue
 comments: true
 date: 2013-03-28 02:57:31+00:00
 layout: post
 slug: '%e6%80%a6%e7%84%b6%e5%bf%83%e5%8a%a8'
 title: 怦然心动
-wordpress_id: 212
 categories:
 - 电影
-- 随笔
 tags:
-- 电影
+- 随笔
 ---
 
 周六半夜里看了这部电影，对整部电影没什么感想，主要在讲两个孩子的恋爱心理。

@@ -1,16 +1,13 @@
 ---
-author: omega.yue
 comments: true
 date: 2012-09-13 13:05:43+00:00
 layout: post
 slug: layout-tool
 title: 做了一个游戏界面布局的工具
-wordpress_id: 17
 categories:
-- Cocos2d-x
 - 技术
 tags:
-- cocos2d-x
+- cocos2d
 - 工具
 ---
 
@@ -32,5 +29,3 @@ tags:
 
 1. 确定是否能满足多屏幕的需求。
 2. 绑定自定义类型够不够强大。
-
-

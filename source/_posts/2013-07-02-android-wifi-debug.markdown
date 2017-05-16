@@ -1,14 +1,13 @@
 ---
-author: omega.yue
 comments: true
 date: 2013-07-02 07:40:38+00:00
 layout: post
 slug: 'anroid-wifi-debug'
 title: 通过无线进行Android联机调试
-wordpress_id: 272
 categories:
-- Android
 - 技术
+tags:
+- Android
 ---
 
 # Debug Android App wirless
@@ -32,4 +31,3 @@ categories:
 第1种方式非常方便，完全不需要使用数据线。第2种方法麻烦一些。。。有点多此一举。
 
 [参考链接](http://stackoverflow.com/a/10236938)
-

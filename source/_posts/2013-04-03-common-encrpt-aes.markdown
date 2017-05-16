@@ -1,13 +1,12 @@
 ---
-author: omega.yue
 comments: true
 date: 2013-04-03 02:51:07+00:00
 layout: post
 slug: common-encrpt-aes
 title: 常用加密算法 - AES
-wordpress_id: 237
 categories:
 - 技术
+tags:
 - 数据结构与算法
 ---
 ##AES

@@ -1,16 +1,14 @@
 ---
-author: omega.yue
 comments: true
 date: 2013-02-19 15:02:48+00:00
 layout: post
 slug: '%e5%9f%ba%e7%9d%a3%e5%b1%b1%e4%bc%af%e7%88%b5%e8%af%bb%e8%ae%b0'
 title: 基督山伯爵读记
-wordpress_id: 128
 categories:
 - 读书
 tags:
 - 基督山伯爵
-- 读书
+- 名著
 ---
 
 1845年8月28日，巴黎的《辩论报》开始连载《基督山伯爵》。作者的名字：大仲马。
@@ -30,7 +28,3 @@ tags:
 
 
 这是这部小说主人公的本名，整部书的第一部分对主人公的称呼。
-
-
-
-

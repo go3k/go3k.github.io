@@ -1,17 +1,14 @@
 ---
-author: omega.yue
 comments: true
 date: 2013-01-16 09:58:45+00:00
-layout: post
-slug: devices-udid
 title: Android、iOS设备唯一标识问题
-wordpress_id: 84
 categories:
-- Android
-- Cocos2d-x
-- iOS
+- 技术
 tags:
+- iOS
+- Android
 - UDID
+- cocos2d
 ---
 
 为了标明用户身份，便于数据统计，设备唯一标识在移动App开发中经常需要用到。

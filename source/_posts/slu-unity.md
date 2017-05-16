@@ -1,4 +1,12 @@
-# SLua for Unity简要技术原理
+---
+date: 2016-06-17 14:08:25+00:00
+title: SLua for Unity简要技术原理
+categories:
+- 技术
+tags:
+- Unity
+- SLua
+---
 
 动态更新对于游戏来说非常重要，它可以极大缩短bug修复、新功能添加的时间成本，同时强制版本更新造成的用户流失也是一大痛点。对于Unity游戏开发者来说，Slua是一个不错的选择。
 

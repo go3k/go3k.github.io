@@ -1,17 +1,14 @@
 ---
-author: omega.yue
 comments: true
 date: 2013-03-14 03:09:43+00:00
 layout: post
 slug: android-crash-call-to-opengl-api-without-a-current-context
 title: Android crash “Call to openGL API without a current context”
-wordpress_id: 204
 categories:
-- Android
-- Cocos2d-x
+- 技术
 tags:
-- android
-- cocos2d-x
+- Android
+- cocos2d
 ---
 
 最近在做各种第三方渠道的SDK接入，国内的Android第三方游戏平台实在是多。。。SDK接入的方式实在五花八门，有些SDK做的实在有够烂，做接入实在苦逼。（吐槽完毕）
@@ -24,8 +21,8 @@ tags:
 当乐SDK接入时产生了这个问题，java部分处理完毕，JNI native方法把结果通知到C++后就crash了，日志错误为：
 
 	Call to openGL API without a current context
-	
-<!-- more -->	
+
+<!-- more -->
 
 排除了客户端代码异常后，Google it，发现：
 

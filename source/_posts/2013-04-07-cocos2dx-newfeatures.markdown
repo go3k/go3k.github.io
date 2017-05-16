@@ -1,14 +1,13 @@
 ---
-author: omega.yue
 comments: true
 date: 2013-04-07 13:27:02+00:00
 layout: post
 slug: cocos2dx-newfeatures
 title: 错过的Cocos2d-x更新
-wordpress_id: 244
 categories:
-- Cocos2d-x
 - 技术
+tags:
+- cocos2d
 ---
 由于一些原因，目前项目使用的cocos2d-x引擎在我保持更新到官方2.0.4版本后，没有继续保持与cocos2d-x官方版本的同步，现在已经落下3个版本了。这是项目经理出于引擎更新时间成本的考虑，所做的决定，当时我也没太重视就表示同意了。But，我现在发觉，这一步错了。
 
@@ -30,7 +29,7 @@ categories:
 * Adds support for callbacks from the timeline
 * Skew properties can now be animated
 
-###Add new features from cocos2d-iphone 
+###Add new features from cocos2d-iphone
 基本保持与cocos2d-iphone中功能的同步
 
 * CCClippingNode

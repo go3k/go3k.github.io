@@ -1,4 +1,15 @@
-# XUPorter加入Embed Framework支持
+---
+date: 2015-03-12 14:08:25+00:00
+title: XUPorter加入Embed Framework支持
+categories:
+- 技术
+tags:
+- Unity
+- XUPorter
+- 开源项目
+- Github
+- Pull Request
+---
 
 ## XUPorter
 
@@ -18,7 +29,7 @@ XUPorter 中文说明: [ReadMe](http://www.onevcat.com/2012/12/xuporter/)
 			....
 			"linker_flags": [],
 			"embed_binaries": ["AiBeiFramework.framework"]
-	
+
 2. 注意：embed_binaries内的framework必须在files或其它字段添加过
 2. embed_binaries是可选配置，这样保证配置文件的兼容性
 
@@ -31,7 +42,7 @@ XUPorter 中文说明: [ReadMe](http://www.onevcat.com/2012/12/xuporter/)
 2. XCode工程配置文件是`.xcodeproj`中的`project.pbxproj`文件，仔细对比增加Embed Framework前后的文件变化。
 
 3. 在`PBXBuildFile section`增加了：
-	
+
 		C6B94D0DAE1BB6B597716138 /* AiBeiFramework.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 294C44AA83B643D5B7A69D29 /* AiBeiFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 
 	在`PBXCopyFilesBuildPhase section`增加了：
@@ -47,9 +58,9 @@ XUPorter 中文说明: [ReadMe](http://www.onevcat.com/2012/12/xuporter/)
 				C6B94D0DAE1BB6B597716138 /* AiBeiFramework.framework in CopyFiles */,
 			);
 		};
-		
+
 	在`PBXNativeTarget section`主工程Target的buildPhases中增加了：
-		
+
 		1D6058900D05DD3D006BFB54 /* Unity-iPhone */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Release */;
@@ -62,12 +73,11 @@ XUPorter 中文说明: [ReadMe](http://www.onevcat.com/2012/12/xuporter/)
 				210E4548994D6EDB0F5944B4 /* CopyFiles */, /*--------新增------*/
 			);
 		......
-		
+
 	在`XCBuildConfiguration`中增加了：
-	
+
 		LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited) @executable_path/Frameworks",
 				);
-	
-4. `PBXBuildFile`、`PBXCopyFilesBuildPhase`、`PBXNativeTarget`这些字段在代码中都有对应的类型定义，只要分析对应的类实现，了解基本用法，适当创建新对象加入到对应的父对象或者为`PBX`对象增加属性即可。具体可参照我的[Pull Request](https://github.com/onevcat/XUPorter/pull/45)。
 
+4. `PBXBuildFile`、`PBXCopyFilesBuildPhase`、`PBXNativeTarget`这些字段在代码中都有对应的类型定义，只要分析对应的类实现，了解基本用法，适当创建新对象加入到对应的父对象或者为`PBX`对象增加属性即可。具体可参照我的[Pull Request](https://github.com/onevcat/XUPorter/pull/45)。

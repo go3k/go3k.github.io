@@ -3,7 +3,7 @@ layout: post
 title: "My Software List on Mac OS"
 date: 2014-03-06 17:34
 comments: true
-categories: 
+categories:
 - 未分类
 tags:
 - tools
@@ -11,7 +11,7 @@ tags:
 ---
 
 ## Why?
-I used to save all the software packages on my Mac's disk, because I think these softwares are useful and I need the keep them in mind or share them with others. 
+I used to save all the software packages on my Mac's disk, because I think these softwares are useful and I need the keep them in mind or share them with others.
 
 But, this seems is not a smart method, because:
 
@@ -59,7 +59,3 @@ So, I decide to create this software list page.
 * To the moon, This is a beautiful story.
 
 > This page will maintain update, and welcome your recommendation.
-
-
-
-

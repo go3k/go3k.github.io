@@ -1,15 +1,14 @@
 ---
-author: omega.yue
 comments: true
 date: 2013-05-14 02:08:05+00:00
 layout: post
 slug: using-breakpad-on-android
 title: Using breakpad on Android
-wordpress_id: 258
 categories:
-- Android
-- C++
 - 技术
+tags:
+- C++
+- Android
 ---
 ##breakpad
 开源项目，用于C/C++代码的崩溃信息处理
@@ -44,11 +43,11 @@ breakpad支持Android，在源码的根目录中有README.ANDROID文档，详细
 a. 包含`android/google_breakpad/Android.mk`到项目的`Android.mk`。可以通过import-module或者直接include实现，示例：
 
 	include $(LOCAL_PATH)/../../google-breakpad/android/google_breakpad/Android.mk
-	
+
 b. link library to one of your modules by using:
 
 	LOCAL_STATIC_LIBRARIES += breakpad_client
-	
+
 1.2 使用独立的Android toolchain编译，我没编译成功，直接使用第1种方式完成的。
 
 >	文档中所有与此方式相关的内容跳过

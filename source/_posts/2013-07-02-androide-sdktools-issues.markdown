@@ -1,14 +1,13 @@
 ---
-author: omega.yue
 comments: true
 date: 2013-07-02 08:26:10+00:00
 layout: post
 slug: android-sdktools-issues
 title: Android更新SDK-tools后的各种问题
-wordpress_id: 277
 categories:
-- Android
 - 技术
+tags:
+- Android
 ---
 
 ## 配置配置配置

@@ -1,3 +1,15 @@
+---
+date: 2014-09-19 14:08:25+00:00
+title: 版权意识和授权许可
+categories:
+- 技术
+tags:
+- 开源
+- license
+- 版权意识
+- copyleft
+- free software
+---
 # 版权意识和授权许可
 
 我们生活在一个版权意识淡薄的社会下，大多数人对授权许可一知半解，好像这些东西离我们太远了。
@@ -16,22 +28,22 @@ CC授权实质上是一个授权条款的模版，你只需要根据自己的情
 
 该授权协议有四个“基本权利”：
 
-* 署名（英语：Attribution，by）	
-	
+* 署名（英语：Attribution，by）
+
 	您（用户）可以复制、发行、展览、表演、放映、广播或通过信息网络传播本作品；您必须按照作者或者许可人指定的方式对作品进行署名。
-	
-* 相同方式共享（英语：ShareAlike，sa）	
+
+* 相同方式共享（英语：ShareAlike，sa）
 
 	您可以自由复制、散布、展示及演出本作品；若您改变、转变或更改本作品，仅在遵守与本作品相同的授权条款下，您才能散布由本作品产生的派生作品。
-	
-* 非商业性使用（英语：Noncommercial，nc）	
+
+* 非商业性使用（英语：Noncommercial，nc）
 
 	您可以自由复制、散布、展示及演出本作品；您不得为商业目的而使用本作品。
-	
-* 禁止演绎（英语：No Derivative Works，nd)	
-	
+
+* 禁止演绎（英语：No Derivative Works，nd)
+
 	您可以自由复制、散布、展示及演出本作品；您不得改变、转变或更改本作品。
-	
+
 可以在cc授权官网：[http://creativecommons.org/choose/?lang=zh&jurisdiction=cn](http://creativecommons.org/choose/?lang=zh&jurisdiction=cn)，根据这些基本权利选择、组合自己需要的授权许可。使用非常简单，选择好条件后，将生成的HTML代码粘贴到自己的网站即可。
 
 例如：

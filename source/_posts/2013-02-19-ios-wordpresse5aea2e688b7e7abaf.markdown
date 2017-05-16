@@ -1,13 +1,11 @@
 ---
-author: omega.yue
 comments: true
 date: 2013-02-19 14:44:37+00:00
 layout: post
 slug: ios-wordpress%e5%ae%a2%e6%88%b7%e7%ab%af
 title: iOS Wordpress客户端
-wordpress_id: 125
 categories:
-- 随笔
+- 心情
 post_format:
 - 状态
 ---

@@ -1,15 +1,11 @@
 ---
-author: omega.yue
 comments: true
 date: 2013-02-19 02:34:02+00:00
 layout: post
 slug: 2012summerise
 title: 2012，本命年已过
-wordpress_id: 119
 categories:
-- 随笔
-post_format:
-- 标准
+- 心情
 tags:
 - 反思
 ---

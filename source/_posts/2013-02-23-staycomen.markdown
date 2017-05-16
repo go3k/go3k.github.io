@@ -1,14 +1,11 @@
 ---
-author: omega.yue
 comments: true
 date: 2013-02-23 16:47:28+00:00
 layout: post
 slug: '%e6%83%85%e5%bd%a2%e8%b6%8a%e5%8d%b1%e6%9c%ba%ef%bc%8c%e8%b6%8a%e8%a6%81%e4%bf%9d%e6%8c%81%e7%90%86%e6%80%a7'
 title: 情形越危机，越要保持理性
-wordpress_id: 133
 categories:
 - 电影
-- 随笔
 tags:
 - '911'
 - 理智

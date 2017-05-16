@@ -1,16 +1,11 @@
 ---
-author: omega.yue
 comments: true
 date: 2012-09-12 14:28:03+00:00
 layout: post
-published: false
 slug: thinking0
 title: 我现在需要思考
-wordpress_id: 15
 categories:
 - 未分类
-post_format:
-- 日志
 ---
 
 一整天都处在一种不知所措的状态，工作进度已经很长时间停滞不前了。
@@ -31,7 +26,3 @@ post_format:
 我需要认清自己，认清当前的形势，转变自己的态度。工作上遇到问题，我不应该想着退缩，而是想尽办法解决它。对待工作计划，我不应该被它牵着鼻子，而需要充分安排工作时间尽可能多的完成既定的任务。
 
 严格对待自己的工作时间，从明天开始，我一定要做到。记住自己的理想，自己的目标，No Pain，No Gain。坚信我可以做的很好！！
-
-
-
-

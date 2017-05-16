@@ -1,15 +1,13 @@
 ---
-author: omega.yue
 comments: true
 date: 2013-07-08 03:28:08+00:00
 layout: post
 slug: cocos2d-x-pluginx-1
 title: Cocos2d-x PluginX （一）使用手册
-wordpress_id: 280
 categories:
-- Cocos2d-x
 - 技术
 tags:
+- cocos2d
 - PluginX
 ---
 
@@ -38,7 +36,7 @@ Plugin-x是cocos2d-x最近版本中引入的特性，旨在解决第三方SDK接
 
 	> 这一步实际上，是把Protocol工程、和各个Plugins工程，编译打包输出jar包和其它关键资源到publish目录，以供后面目标工程中引用。
 3. publish中的文件主要有：
-	
+
 	* 头文件  .h
 	* C++静态库  .a
 	* java库文件  .lib
@@ -79,13 +77,13 @@ Plugin-x是cocos2d-x最近版本中引入的特性，旨在解决第三方SDK接
 
 2. 修改main.cpp中的JNI_Onload方法
 
-		#include "PluginJniHelper.h" 
-		
+		#include "PluginJniHelper.h"
+
 		jint JNI_OnLoad(JavaVM *vm, void *reserved)
 		{
 			JniHelper::setJavaVM(vm);
 			PluginJniHelper::setJavaVM(vm);  // for plugins
-			
+
 			return JNI_VERSION_1_4;
 		}
 
@@ -94,11 +92,11 @@ Plugin-x是cocos2d-x最近版本中引入的特性，旨在解决第三方SDK接
 		import org.cocos2dx.plugin.PluginWrapper;
 		import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
 		public class HelloIAP extends Cocos2dxActivity{
-		
+
 		    protected void onCreate(Bundle savedState){
 		        super.onCreate(savedState);
 		        PluginWrapper.init(this); // for plugins
-		
+
 		        // If you want your callback function can be invoked in GL thread, add this line:
 		        PluginWrapper.setGLSurfaceView(Cocos2dxGLSurfaceView.getInstance());
 		    }
@@ -118,7 +116,7 @@ JNI调用和相关的虚接口都已经在Protocol工程里处理好了，所以
 		// load plugin AnalyticsFlurry
 		s_pFlurry = dynamic_cast<ProtocolAnalytics*>
 		(PluginManager::getInstance()->loadPlugin("AnalyticsFlurry"));
-		
+
 		// unload plugin AnalyticsFlurry
 		PluginManager::getInstance()->unloadPlugin("AnalyticsFlurry");
 		s_pFlurry = NULL;
@@ -129,10 +127,10 @@ JNI调用和相关的虚接口都已经在Protocol工程里处理好了，所以
 
 		// enable the debug mode
 		s_pFlurry->setDebugMode(true);
-		
+
 		// log an event
 		s_pFlurry->logEvent("music");
-		
+
 		// log an event with params
 		LogEventParamMap paramMap;
 		paramMap.insert(LogEventParamPair("type", "popular"));

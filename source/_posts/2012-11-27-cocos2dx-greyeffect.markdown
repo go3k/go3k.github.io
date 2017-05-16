@@ -1,15 +1,13 @@
 ---
-author: omega.yue
 comments: true
 date: 2012-11-27 09:38:04+00:00
 layout: post
 slug: cocos2dx-greyeffect
 title: cocos2d-x实现图像灰度渐变效果
-wordpress_id: 28
 categories:
-- Cocos2d-x
+- 技术
 tags:
-- cocos2d-x
+- cocos2d
 - effect
 - OpenGL
 ---
@@ -35,9 +33,3 @@ tags:
 注意：这与另外提供一张灰度图片的方案是相当有差别的，此方案不必进行载入新图片的I/O操作，同时也不必占用多一张的内存。
 
 OK，不算复杂，效果还不错。
-
-
-
-
-
-
