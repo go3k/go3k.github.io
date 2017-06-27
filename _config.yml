@@ -65,6 +65,11 @@ pagination_dir: page
 ## Themes: https://hexo.io/themes/
 theme: material
 
+sitemap:
+    path: sitemap.xml
+    # template: ./sitemap_template.xml
+
+
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
@@ -72,6 +77,3 @@ deploy:
   repo: https://github.com/go3k/go3k.github.io
   brach: master
 
-# third party
-duoshuo_shortname: go3kio
-baidu_analytics: 0711437c0afe4d40f4d40e3b2cba4d1d
