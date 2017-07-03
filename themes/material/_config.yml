@@ -187,10 +187,10 @@ sidebar:
 
 # MaterialCDN
 # When you set 'use' as true, the needed css, js, font file will have a new src.
-# The new src will have the base domain you configured in 'base'.
+# The new src will have the base domain you configured in 'base'.  "http://oq1uojjvq.bkt.clouddn.com/cdn"
 materialcdn:
-    use: false
-    base: "http://oq1uojjvq.bkt.clouddn.com/cdn"
+    use: true
+    base: "http://osi44bgfi.bkt.clouddn.com"
 
 # Comment Systems
 # Available value of "use":
