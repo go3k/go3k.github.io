@@ -1,0 +1,196 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>C++项目优化头文件包含</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2.0">
+<link rel="stylesheet", href="/./css/style.css">
+<link rel="shortcut icon", href="/./favicon.ico">
+<link rel="apple-touch-icon", href="/./apple-touch-icon.png">
+
+        
+    
+    <link rel='stylesheet' href="/./css/dracula.css">
+
+    <meta name="generator" content="Hexo 5.2.0"></head>
+    <body>
+        <header class="al_header al_pos_fixed">
+    <div class="al_header_container dis_flex_jcenter">
+        <div class="al_header_container_left">
+            <div class="al_header_site_title">
+                <a href="/">Hexo</a>
+            </div>
+        </div>
+
+        <div class="dis_flex_jcenter">
+            <div class="al_header_setting">
+                <svg class="al_header_icon">
+                    <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-menu"></use>
+                </svg>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="al_sidebar">
+
+    <div class="al_sidebar_overlay al_full_cover"></div>
+
+    <div class="al_pos_fixed al_sidebar_cnt">
+        <div class="dis_flex_acenter al_sidebar_header">
+            <h3>Hexo</h3>
+            <div class="al_sidebar_close al_header_setting">
+                <svg class="al_header_icon">
+                    <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-close"></use>
+                </svg>
+            </div>
+        </div>
+
+        <div class="al_sidebar_author_cnt">
+
+            <div class="al_sidebar_author_info">
+                <h4>John Doe</h4>
+                <img class="al_sidebar_avatar" src="https://yourAvatorURL">
+                <p></p>
+            </div>
+
+            
+        </div>
+    </div>
+</div>
+
+        
+    <div class="dis_flex_center al_lightbox_cnt al_full_cover">
+        <img class="al_lightbox_img"/>
+    </div>
+    <div class="al_page_background dis_flex_center al_full_cover"></div>
+    <div class="al_page_container">
+        <div class="al_pos_ab al_fake_background"></div>
+        <div class="al_main_container al_shadow al_main_page_container">
+            <article class="al_article">
+                <header>
+                    <h1 class="al_page_title">
+                        C++项目优化头文件包含
+                    </h1>
+                    <div class="al_page_info dis_flex">
+                        <div class="al_page_content_info">
+                            July 31, 2014 06:07 AM
+                        </div>
+
+                        
+
+                        
+                        <span class="tags"></span>
+                    </div>
+                </header>
+
+                
+                    <div class="al_page_content_outline">
+                        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%B4%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E9%97%AE%E9%A2%98"><span class="toc-text">头文件包含问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E8%AE%AE%E7%BC%96%E7%A0%81%E5%8E%9F%E5%88%99"><span class="toc-text">建议编码原则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E5%8C%96%E5%B7%A5%E5%85%B7"><span class="toc-text">自动化工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Visual-Studio-12%E8%87%AA%E5%B8%A6%E5%8A%9F%E8%83%BD"><span class="toc-text">Visual Studio 12自带功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-C-%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7PC-lint"><span class="toc-text">C&#x2F;C++静态分析工具PC-lint</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-text">参考链接</span></a></li></ol>
+                    </div>
+                
+
+                
+                <section id="post-body">
+                    <p>当一个C++项目越来越庞大，编译时间会慢的让人难受。虽说编译执行的语言在编译阶段都存在类似的问题，但是很多时候错误的编码习惯才是这类问题的根源。</p>
+<h2 id="头文件包含问题"><a href="#头文件包含问题" class="headerlink" title="头文件包含问题"></a>头文件包含问题</h2><p>如果你的项目随便修改了某个头文件，就造成整个项目大规模的重新编译，那么就需要注意头文件包含问题了。</p>
+<p>问题原因是，C/C++中<code>#include</code>是一个预编译关键字，预编译处理时它会将<code>#include</code>后面的文件内容直接复制过来。当include后面的文件有修改，那么当前文件也会被认为有修改，该文件会被重新编译。举例说明：</p>
+<pre><code>//A.h
+void A_dosth();
+
+//B.h
+#include &quot;A.h&quot;
+void B_dosth();
+
+//B.cpp
+#include &quot;B.h&quot;
+void B_dosth()
+&#123;
+    //......
+&#125;</code></pre>
+<p>如果<code>A.h</code>或<code>B.h</code>任一文件有修改，那么<code>B.cpp</code>就会被重新编译。</p>
+<p>可以想象一下更加复杂的情况，头文件之间互相嵌套包含，当嵌套关系上的任何一个头文件修改时，所有包含它的文件都会重新编译。如果不加以控制，整个项目就像蝴蝶效应一般，牵一发动全身。每个修改都将带来大量文件的编译，开发效率极受影响。</p>
+<h2 id="建议编码原则"><a href="#建议编码原则" class="headerlink" title="建议编码原则"></a>建议编码原则</h2><ul>
+<li>头文件中尽量使用类前置声明，避免在头文件中包含其它头文件。<a target="_blank" rel="noopener" href="http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml?showone=Forward_Declarations#Forward_Declarations">Google c++ Style Guide</a></li>
+<li>使用PIMPL，降低不同模块之间的编译依赖。具体参考：<a target="_blank" rel="noopener" href="http://blog.csdn.net/wo17fang/article/details/25280577">csdn文章</a></li>
+<li>Unity Build，把关联的cpp包含到一个<code>all.cpp</code>中 ,然后只编译<code>all.cpp</code>。</li>
+<li>面向接口编程，定义好模块的接口。代码尽量接近MVC模式，只在Controller部分做各模块间的通信。</li>
+<li>不要滥用单例模式，例如：Datamanager单例用于获取数据，开发过程中数据结构和接口会经常变化和新增的；如果到处使用datamanager单例获取数据，那么每次对datamanager的修改会造成代码大规范编译。</li>
+</ul>
+<h2 id="自动化工具"><a href="#自动化工具" class="headerlink" title="自动化工具"></a>自动化工具</h2><p>代码重构后，忘记删除某些头文件包含。积累下来，项目中有很多unused include。人工检查这类问题会费时费力，下面推荐一些工具化的手段。</p>
+<h3 id="Visual-Studio-12自带功能"><a href="#Visual-Studio-12自带功能" class="headerlink" title="Visual Studio 12自带功能"></a>Visual Studio 12自带功能</h3><ul>
+<li>vs中的showinclude选项，编译时可以显示每个cpp中使用的所有头文件，是一个层级结构，这可以帮助分析。如果某个文件重复出现，则认定为重复包含。</li>
+<li>Generate Graph of Include Files，这个功能非常强大，可以生成某个文件的头文件包含情况图，可以用来非常直观的分析头文件的包含结构。其实这个功能，可以反应程序结构设计好坏，协助及时发现设计问题。</li>
+</ul>
+<h3 id="C-C-静态分析工具PC-lint"><a href="#C-C-静态分析工具PC-lint" class="headerlink" title="C/C++静态分析工具PC-lint"></a>C/C++静态分析工具PC-lint</h3><p>资历最老，牌子最响，功能非常强大应有尽有。</p>
+<ul>
+<li>支持大部分的编译器</li>
+<li>支持大部分的IDE</li>
+<li>可检查代码中隐含的错误，检查非常严格；提示unused include情况，提供类前置声明建议；等等</li>
+<li>跨平台，类Unix版本名为Flexe-Lint</li>
+</ul>
+<p>但是需付费，超级贵。(可用破解版试用)</p>
+<p><a target="_blank" rel="noopener" href="http://www.gimpel.com/html/pcl.htm">PC-lint官方网站</a></p>
+<p>具体使用请参考另外一篇文章：<a href="">cocos2d-x项目使用pc-lint</a></p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a target="_blank" rel="noopener" href="http://www.cnblogs.com/baiyanhuang/archive/2010/01/17/1730717.html">如何加快C++代码的编译速度</a></p>
+
+                </section>
+
+                
+                
+                
+
+            </article>
+
+            
+            <nav class="dis_flex al_post_nav">
+                <a class="al_post_nav_item dis_flex_acenter" href="/2014/08/09/the-missing-horizzon/">
+                    
+                        <svg class="al_arrow">
+                            <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-arrow-left"></use>
+                        </svg>
+                        <span class="al_text_ellipsis al_post_nav_desc">云南行与《消失的地平线》</span>
+                    
+                </a>
+                <a class="al_post_nav_item dis_flex_acenter" href="/2014/07/31/the-hobbit/">
+                    
+                        <span class="al_text_ellipsis al_post_nav_desc">读书随笔：霍比特人</span>
+                        <svg class="al_arrow">
+                            <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-arrow-right"></use>
+                        </svg>
+                    
+                </a>
+            </nav>
+        </div>
+    </div>
+
+
+        <div class="al_index_footer dis_flex_center">
+    <div class="al_index_footer_item al_index_footer_title">
+        John Doe
+    </div>
+
+    
+    
+
+    <div class="al_index_footer_item al_index_footer_extra">
+        Created By 
+        <a target="_blank" rel="noopener" href="https://github.com/iGuan7u/Acetolog">AcetoLog</a>
+         · Power By 
+        <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>
+    </div>
+
+    <div class="al_index_footer_item al_index_footer_extra_right">
+        All Right Reserved
+    </div>
+</div>
+
+        <script type="text/javascript" async="async" src="/javascripts/acelog.js"></script>
+        
+        
+        
+        
+    </body>
+</html>
+        

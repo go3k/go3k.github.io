@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Android应用程序签名</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2.0">
+<link rel="stylesheet", href="/./css/style.css">
+<link rel="shortcut icon", href="/./favicon.ico">
+<link rel="apple-touch-icon", href="/./apple-touch-icon.png">
+
+        
+    
+    <link rel='stylesheet' href="/./css/dracula.css">
+
+    <meta name="generator" content="Hexo 5.2.0"></head>
+    <body>
+        <header class="al_header al_pos_fixed">
+    <div class="al_header_container dis_flex_jcenter">
+        <div class="al_header_container_left">
+            <div class="al_header_site_title">
+                <a href="/">Hexo</a>
+            </div>
+        </div>
+
+        <div class="dis_flex_jcenter">
+            <div class="al_header_setting">
+                <svg class="al_header_icon">
+                    <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-menu"></use>
+                </svg>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="al_sidebar">
+
+    <div class="al_sidebar_overlay al_full_cover"></div>
+
+    <div class="al_pos_fixed al_sidebar_cnt">
+        <div class="dis_flex_acenter al_sidebar_header">
+            <h3>Hexo</h3>
+            <div class="al_sidebar_close al_header_setting">
+                <svg class="al_header_icon">
+                    <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-close"></use>
+                </svg>
+            </div>
+        </div>
+
+        <div class="al_sidebar_author_cnt">
+
+            <div class="al_sidebar_author_info">
+                <h4>John Doe</h4>
+                <img class="al_sidebar_avatar" src="https://yourAvatorURL">
+                <p></p>
+            </div>
+
+            
+        </div>
+    </div>
+</div>
+
+        
+    <div class="dis_flex_center al_lightbox_cnt al_full_cover">
+        <img class="al_lightbox_img"/>
+    </div>
+    <div class="al_page_background dis_flex_center al_full_cover"></div>
+    <div class="al_page_container">
+        <div class="al_pos_ab al_fake_background"></div>
+        <div class="al_main_container al_shadow al_main_page_container">
+            <article class="al_article">
+                <header>
+                    <h1 class="al_page_title">
+                        Android应用程序签名
+                    </h1>
+                    <div class="al_page_info dis_flex">
+                        <div class="al_page_content_info">
+                            January 23, 2013 04:01 AM
+                        </div>
+
+                        
+
+                        
+                        <span class="tags"></span>
+                    </div>
+                </header>
+
+                
+                    <div class="al_page_content_outline">
+                        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%BB%98%E8%AE%A4debug%E5%AF%86%E9%92%A5%E7%AD%BE%E5%90%8D"><span class="toc-text">默认debug密钥签名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E5%AF%86%E9%92%A5%E7%AD%BE%E5%90%8D"><span class="toc-text">生成密钥签名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AF%E4%BD%BF%E7%94%A8debug-keystore%E5%8F%91%E5%B8%83%E7%9A%84%E5%BA%94%E7%94%A8%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F"><span class="toc-text">误使用debug.keystore发布的应用怎么办？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%A7%E7%94%9F%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">产生的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95"><span class="toc-text"> 解决办法</span></a></li></ol>
+                    </div>
+                
+
+                
+                <section id="post-body">
+                    <p>Android系统要求所有的程序经过数字签名才能安装，如果没有可用的数字签名，系统将不许安装运行此程序，不管是模拟器还是真实手机。因此，在设备或者是模拟器上运行调试程序之前，必须为应用程序设置数字签名。Android系统仅仅会在安装的时候测试签名证书的有效期，如果应用程序的签名在安装之后过期，那么应用程序仍然可以正常启用。</p>
+<p>Android通过数字签名来标识应用程序的作者和在应用程序之间建立信任关系，不是用来决定用户可不可以安装该应用程序。android的这个签名由应用程序的作者完成，并不需要权威的数字证书签名机构认证，他只是用来让应用程序包自我认证的。</p>
+<a id="more"></a>
+
+
+<h2 id="默认debug密钥签名"><a href="#默认debug密钥签名" class="headerlink" title="默认debug密钥签名"></a>默认debug密钥签名</h2><p>当用Eclipse打包测试时，ADT会自动使用debug密钥为应用程序签名，debug密钥是一个名为debug.keystore的文件，位于电脑的：</p>
+<pre><code>/userName/.Android/debug.keystore，其中的userName是电脑的用户名。</code></pre>
+<p>工程的bin目录下的apk包就是使用debug密钥做签名的包，所以理论上是不能用这个包做上线发布的。</p>
+<h2 id="生成密钥签名"><a href="#生成密钥签名" class="headerlink" title="生成密钥签名"></a>生成密钥签名</h2><p>整个过程涉及到几个工具：</p>
+<ul>
+<li>keytool    生成、修改操作数字证书，jdk的工具</li>
+<li>jarsigner  使用数字证书给apk文件签名，jdk的工具</li>
+<li>zipalign   对签名后的apk进行优化，提高与Android系统交互的效率，Android sdk中的工具</li>
+</ul>
+<p>最简单的方法是直接使用Eclipse的功能完成这一系列操作：</p>
+<p>右击工程-&gt;Android Tools-&gt;Export signed Application package，选择使用现有的keystore签名、创建新的keystore签名。有几个关键信息需要记住：</p>
+<ul>
+<li>storepass：keystore的密码(一个keystore下面可以存在多个key，这是keystore的一级密码)</li>
+<li>alias：每个key对应一个alias名字</li>
+<li>keypass：单个key的主密码</li>
+</ul>
+<p>输入正确的keystore信息就可以输出一个打包过的apk包了。</p>
+<h2 id="误使用debug-keystore发布的应用怎么办？"><a href="#误使用debug-keystore发布的应用怎么办？" class="headerlink" title="误使用debug.keystore发布的应用怎么办？"></a>误使用debug.keystore发布的应用怎么办？</h2><p>没错。。。说的就是我自己。</p>
+<h2 id="产生的问题"><a href="#产生的问题" class="headerlink" title="产生的问题"></a>产生的问题</h2><p>第一次发布时，直接从bin目录拷出apk包，并把这个包发布。这样就是使用debug.keystore签名、并上线了应用，我想发生这种情况都是因为不太了解Android应用程序签名相关的细节。</p>
+<p>当发现了以后，希望使用一个自己生成的“正规的”keystore再更新应用。因为更换了keystore，那么安装包的签名就变了。用户更新应用时，会在安装过程中报错。安装过程中系统检测到程序的签名不一致，认为安装包有风险(可能被篡改)，安装失败，需要卸载原应用重新安装。这样的问题很严重！！！</p>
+<h2 id="解决办法"><a href="#解决办法" class="headerlink" title=" 解决办法"></a> 解决办法</h2><p>一个字，改！！！</p>
+<p>找到debug.keystore文件，事实上你只要保存这个.keystore，今后都使用默认key做应用程序签名并更新也是可以的，一点问题没有。只是默认密码会有点不安全。</p>
+<p>debug.keystore默认信息为：</p>
+<p>alias : androiddebugkey</p>
+<p>storepass&amp;keypass : andriod</p>
+<p>只需要使用keytool，把debug.keystore的alias、storepass、keypass修改为我们想要的值即可。</p>
+<p>修改alias：</p>
+<pre><code>keytool -changealias -alias &quot;your-very-very-long-alias&quot; -destalias &quot;new-alias&quot; -keypass keypass -keystore /path/to/keystore -storepass storepass</code></pre>
+<p>修改storepass：</p>
+<pre><code>keytool -storepasswd -keystore /path/to/keystore
+Enter keystore password:  changeit
+New keystore password:  new-password
+Re-enter new keystore password:  new-password</code></pre>
+<p>keytool手册：</p>
+
+                </section>
+
+                
+                
+                
+
+            </article>
+
+            
+            <nav class="dis_flex al_post_nav">
+                <a class="al_post_nav_item dis_flex_acenter" href="/2013/02/19/2013-02-19-2012summerise/">
+                    
+                        <svg class="al_arrow">
+                            <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-arrow-left"></use>
+                        </svg>
+                        <span class="al_text_ellipsis al_post_nav_desc">2012，本命年已过</span>
+                    
+                </a>
+                <a class="al_post_nav_item dis_flex_acenter" href="/2013/01/16/2013-01-16-devices-udid/">
+                    
+                        <span class="al_text_ellipsis al_post_nav_desc">Android、iOS设备唯一标识问题</span>
+                        <svg class="al_arrow">
+                            <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-arrow-right"></use>
+                        </svg>
+                    
+                </a>
+            </nav>
+        </div>
+    </div>
+
+
+        <div class="al_index_footer dis_flex_center">
+    <div class="al_index_footer_item al_index_footer_title">
+        John Doe
+    </div>
+
+    
+    
+
+    <div class="al_index_footer_item al_index_footer_extra">
+        Created By 
+        <a target="_blank" rel="noopener" href="https://github.com/iGuan7u/Acetolog">AcetoLog</a>
+         · Power By 
+        <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>
+    </div>
+
+    <div class="al_index_footer_item al_index_footer_extra_right">
+        All Right Reserved
+    </div>
+</div>
+
+        <script type="text/javascript" async="async" src="/javascripts/acelog.js"></script>
+        
+        
+        
+        
+    </body>
+</html>
+        

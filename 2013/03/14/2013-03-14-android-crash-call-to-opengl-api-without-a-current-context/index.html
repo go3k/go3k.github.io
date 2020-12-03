@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Android crash “Call to openGL API without a current context”</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2.0">
+<link rel="stylesheet", href="/./css/style.css">
+<link rel="shortcut icon", href="/./favicon.ico">
+<link rel="apple-touch-icon", href="/./apple-touch-icon.png">
+
+        
+    
+    <link rel='stylesheet' href="/./css/dracula.css">
+
+    <meta name="generator" content="Hexo 5.2.0"></head>
+    <body>
+        <header class="al_header al_pos_fixed">
+    <div class="al_header_container dis_flex_jcenter">
+        <div class="al_header_container_left">
+            <div class="al_header_site_title">
+                <a href="/">Hexo</a>
+            </div>
+        </div>
+
+        <div class="dis_flex_jcenter">
+            <div class="al_header_setting">
+                <svg class="al_header_icon">
+                    <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-menu"></use>
+                </svg>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="al_sidebar">
+
+    <div class="al_sidebar_overlay al_full_cover"></div>
+
+    <div class="al_pos_fixed al_sidebar_cnt">
+        <div class="dis_flex_acenter al_sidebar_header">
+            <h3>Hexo</h3>
+            <div class="al_sidebar_close al_header_setting">
+                <svg class="al_header_icon">
+                    <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-close"></use>
+                </svg>
+            </div>
+        </div>
+
+        <div class="al_sidebar_author_cnt">
+
+            <div class="al_sidebar_author_info">
+                <h4>John Doe</h4>
+                <img class="al_sidebar_avatar" src="https://yourAvatorURL">
+                <p></p>
+            </div>
+
+            
+        </div>
+    </div>
+</div>
+
+        
+    <div class="dis_flex_center al_lightbox_cnt al_full_cover">
+        <img class="al_lightbox_img"/>
+    </div>
+    <div class="al_page_background dis_flex_center al_full_cover"></div>
+    <div class="al_page_container">
+        <div class="al_pos_ab al_fake_background"></div>
+        <div class="al_main_container al_shadow al_main_page_container">
+            <article class="al_article">
+                <header>
+                    <h1 class="al_page_title">
+                        Android crash “Call to openGL API without a current context”
+                    </h1>
+                    <div class="al_page_info dis_flex">
+                        <div class="al_page_content_info">
+                            March 13, 2013 07:03 PM
+                        </div>
+
+                        
+
+                        
+                        <span class="tags"></span>
+                    </div>
+                </header>
+
+                
+                    <div class="al_page_content_outline">
+                        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8E%E5%BD%93%E4%B9%90SDK%E6%9C%89%E5%85%B3"><span class="toc-text">与当乐SDK有关</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2013-04-18%E6%9B%B4%E6%96%B0"><span class="toc-text">2013.04.18更新</span></a></li></ol>
+                    </div>
+                
+
+                
+                <section id="post-body">
+                    <p>最近在做各种第三方渠道的SDK接入，国内的Android第三方游戏平台实在是多。。。SDK接入的方式实在五花八门，有些SDK做的实在有够烂，做接入实在苦逼。（吐槽完毕）</p>
+<p>之前我做了几个渠道接入和游戏内支付，360、iapppay、Appstore的IAP，已经把客户端结构搭建好、辅助API封闭完毕，服务端也全部调通可以做其它第三方平台接入扩展了。这次就简要说明流程，把任务交下去做了。</p>
+<p><strong>没想到。。</strong></p>
+<p>##Crash原因<br>当乐SDK接入时产生了这个问题，java部分处理完毕，JNI native方法把结果通知到C++后就crash了，日志错误为：</p>
+<pre><code>Call to openGL API without a current context</code></pre>
+<a id="more"></a>
+
+<p>排除了客户端代码异常后，Google it，发现：</p>
+<blockquote>
+<p>From the GLSurfaceView documentation:</p>
+</blockquote>
+<blockquote>
+<p>“There are situations where the EGL rendering context will be lost. This typically happens when device wakes up after going to sleep. When the EGL context is lost, all OpenGL resources (such as textures) that are associated with that context will be automatically deleted. In order to keep rendering correctly, a renderer must recreate any lost resources that it still needs. The onSurfaceCreated(GL10, EGLConfig) method is a convenient place to do this.”</p>
+</blockquote>
+<blockquote>
+<p>You need to be aware of lost OpenGL contexts, then reacquire the context and reload all OpenGL resources. It looks like your context is being lost when you display the full-screen file browser.</p>
+</blockquote>
+<p>详见<a target="_blank" rel="noopener" href="http://stackoverflow.com/a/3585482/1773317">stackoverflow answer</a></p>
+<p>有些情况下，GLSurfaceView的rendering context会被清掉，而Context被清掉后再去调用OpenGL方法就会发生Crash，Call to openGL API without a current context。</p>
+<h3 id="与当乐SDK有关"><a href="#与当乐SDK有关" class="headerlink" title="与当乐SDK有关"></a>与当乐SDK有关</h3><p>简单分析后，原因基本确定。当乐SDK的使用方法是，启动一个全屏Dialog，Dialog中内嵌WebView，登录、支付的操作都在WebView中进行，最后关闭Dialog把结果返回。所以，Dialog加载WebView后，把Main Activity中OpenGL的rendering context清除了，那么之后的调用就会出错。</p>
+<p>##解决方法</p>
+<p>###思路<br>很简单，cocos2d-x Android部分有针对解决这个问题的处理方案，见 <code>/jni/xxx/main.cpp</code>中，如下函数实现：</p>
+<pre><code>Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit</code></pre>
+<p>从函数名上可以看出这是一个JNI native方法，它在Cocos2dxRenderer中声明并被调用。当Android app切出后切入(后台转到前台)，从其它Activity切回Cocos2dxRenderer所在Activity时都会被调用。</p>
+<p>这个函数实现里会进行OpenGL rendering context创建以及相关的处理，那么我们想办法那这个方法被调用，就可以高效的解决Crash问题。</p>
+<p>###方案</p>
+<p>把当乐SDK的使用封装到另一个Activity中去，当需要使用当乐SDK时启动并跳转到这个Activity，当乐SDK处理完成时，关闭Activity回到MainActivity。这样就会调用<code>Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit</code>方法“自动的”重新创建并初始化好OpenGL环境，程序正常运行，不会再发生crash。</p>
+<h3 id="2013-04-18更新"><a href="#2013-04-18更新" class="headerlink" title="2013.04.18更新"></a>2013.04.18更新</h3><p><a target="_blank" rel="noopener" href="http://hsienwei.blogspot.com/2012/11/call-to-opengl-es-api-with-no-current.html">参考链接</a></p>
+<p>今天又遇到这个问题，而我实在不想用以前的方式解决，于是又Google了一次。<br>发现这个问题不一定是OpenGL context被清除，还有因为：“在OpenGL Thread以外的Thread呼叫OpenGL指令”。<br>可以使用GLSurfaceView.queueEvent的方式解決，具体方案见参考链接。</p>
+
+                </section>
+
+                
+                
+                
+
+            </article>
+
+            
+            <nav class="dis_flex al_post_nav">
+                <a class="al_post_nav_item dis_flex_acenter" href="/2013/03/27/2013-03-27-hello-ps3/">
+                    
+                        <svg class="al_arrow">
+                            <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-arrow-left"></use>
+                        </svg>
+                        <span class="al_text_ellipsis al_post_nav_desc">Hello PS3</span>
+                    
+                </a>
+                <a class="al_post_nav_item dis_flex_acenter" href="/2013/03/12/2013-03-12-marcos-cpp/">
+                    
+                        <span class="al_text_ellipsis al_post_nav_desc">C/C++中的#、##和__VA_ARGS__</span>
+                        <svg class="al_arrow">
+                            <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-arrow-right"></use>
+                        </svg>
+                    
+                </a>
+            </nav>
+        </div>
+    </div>
+
+
+        <div class="al_index_footer dis_flex_center">
+    <div class="al_index_footer_item al_index_footer_title">
+        John Doe
+    </div>
+
+    
+    
+
+    <div class="al_index_footer_item al_index_footer_extra">
+        Created By 
+        <a target="_blank" rel="noopener" href="https://github.com/iGuan7u/Acetolog">AcetoLog</a>
+         · Power By 
+        <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>
+    </div>
+
+    <div class="al_index_footer_item al_index_footer_extra_right">
+        All Right Reserved
+    </div>
+</div>
+
+        <script type="text/javascript" async="async" src="/javascripts/acelog.js"></script>
+        
+        
+        
+        
+    </body>
+</html>
+        

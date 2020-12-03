@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Using breakpad on Android</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2.0">
+<link rel="stylesheet", href="/./css/style.css">
+<link rel="shortcut icon", href="/./favicon.ico">
+<link rel="apple-touch-icon", href="/./apple-touch-icon.png">
+
+        
+    
+    <link rel='stylesheet' href="/./css/dracula.css">
+
+    <meta name="generator" content="Hexo 5.2.0"></head>
+    <body>
+        <header class="al_header al_pos_fixed">
+    <div class="al_header_container dis_flex_jcenter">
+        <div class="al_header_container_left">
+            <div class="al_header_site_title">
+                <a href="/">Hexo</a>
+            </div>
+        </div>
+
+        <div class="dis_flex_jcenter">
+            <div class="al_header_setting">
+                <svg class="al_header_icon">
+                    <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-menu"></use>
+                </svg>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="al_sidebar">
+
+    <div class="al_sidebar_overlay al_full_cover"></div>
+
+    <div class="al_pos_fixed al_sidebar_cnt">
+        <div class="dis_flex_acenter al_sidebar_header">
+            <h3>Hexo</h3>
+            <div class="al_sidebar_close al_header_setting">
+                <svg class="al_header_icon">
+                    <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-close"></use>
+                </svg>
+            </div>
+        </div>
+
+        <div class="al_sidebar_author_cnt">
+
+            <div class="al_sidebar_author_info">
+                <h4>John Doe</h4>
+                <img class="al_sidebar_avatar" src="https://yourAvatorURL">
+                <p></p>
+            </div>
+
+            
+        </div>
+    </div>
+</div>
+
+        
+    <div class="dis_flex_center al_lightbox_cnt al_full_cover">
+        <img class="al_lightbox_img"/>
+    </div>
+    <div class="al_page_background dis_flex_center al_full_cover"></div>
+    <div class="al_page_container">
+        <div class="al_pos_ab al_fake_background"></div>
+        <div class="al_main_container al_shadow al_main_page_container">
+            <article class="al_article">
+                <header>
+                    <h1 class="al_page_title">
+                        Using breakpad on Android
+                    </h1>
+                    <div class="al_page_info dis_flex">
+                        <div class="al_page_content_info">
+                            May 13, 2013 06:05 PM
+                        </div>
+
+                        
+
+                        
+                        <span class="tags"></span>
+                    </div>
+                </header>
+
+                
+
+                
+                <section id="post-body">
+                    <p>##breakpad<br>开源项目，用于C/C++代码的崩溃信息处理</p>
+<p>googlecode项目地址为：<a target="_blank" rel="noopener" href="https://code.google.com/p/google-breakpad/">breakpad</a></p>
+<p>应用的项目有：Chrome、Firefox、Picasa、Google Earth等等。</p>
+<p>##for android<br>breakpad支持Android，在源码的根目录中有README.ANDROID文档，详细介绍了如何正确在Android平台使用breakpad。</p>
+<a id="more"></a>
+
+<p>###为什么需要breakpad?<br>我目前在做cocos2d-x跨Android/iOS平台的游戏，现状是：</p>
+<ul>
+<li>iOS平台的crash report非常好用，可以很方便的统计崩溃，并通过crash report定位崩溃信息（可精确到崩溃函数名称、所在行数）。</li>
+<li>Android平台，机型、ROM比较混乱，出错机率相对高很多；并且因为cocos2d-x本身由cocos2d衍生，cocos2d是基于iOS的游戏引擎，所以cocos2d-x在iOS平台表现较稳定，而在Android平台还存在着各种各样的问题。Android本身提供的crash report机制不能支持对C++库中崩溃的处理。</li>
+</ul>
+<p>于是，Android平台上实现一套crash log生成、上传、分析的功能尤为重要。breakpad就是一个不错的选择。</p>
+<p>##用法</p>
+<p>阅读README.ANDROID</p>
+<blockquote>
+<p>以下内容，是我的配置过程记录。</p>
+</blockquote>
+<p>###1. 编译breakpad客户端库，有两种方式：</p>
+<p>1.1 通过ndk编译，这种方式非常便捷</p>
+<p>a. 包含<code>android/google_breakpad/Android.mk</code>到项目的<code>Android.mk</code>。可以通过import-module或者直接include实现，示例：</p>
+<pre><code>include $(LOCAL_PATH)/../../google-breakpad/android/google_breakpad/Android.mk</code></pre>
+<p>b. link library to one of your modules by using:</p>
+<pre><code>LOCAL_STATIC_LIBRARIES += breakpad_client</code></pre>
+<p>1.2 使用独立的Android toolchain编译，我没编译成功，直接使用第1种方式完成的。</p>
+<blockquote>
+<p>   文档中所有与此方式相关的内容跳过</p>
+</blockquote>
+<p>###2. 使用客户端库</p>
+<p>2.1 C++代码中包含<code>client/linux/handler/exception_handler.h</code>文件</p>
+<p>2.2 注意Android上没有/tmp目录</p>
+<hr>
+<p>需要一个保存崩溃信息文件的目录</p>
+<p>android/sample_app下有一个示例可供参考。</p>
+<p>###3.处理log文件<br>程序crash后，breakpad保存信息到.dmp文件</p>
+<p>###4. 编译breakpad工具集<br>一定要准备Linux环境，按README进行编译。编译出错的话，看error分析，比较顺利，期间我只安装了一次g++就直接编译通过了。</p>
+<p>生成符号文件</p>
+<p>使用符号文件，分析.dmp中的crash信息。一定要让.sym文件名与.so名相同，这样才可以正常完成符号映射。</p>
+<p>###5. 项目中使用</p>
+<p>暂空</p>
+
+                </section>
+
+                
+                
+                
+
+            </article>
+
+            
+            <nav class="dis_flex al_post_nav">
+                <a class="al_post_nav_item dis_flex_acenter" href="/2013/07/02/2013-07-02-android-wifi-debug/">
+                    
+                        <svg class="al_arrow">
+                            <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-arrow-left"></use>
+                        </svg>
+                        <span class="al_text_ellipsis al_post_nav_desc">通过无线进行Android联机调试</span>
+                    
+                </a>
+                <a class="al_post_nav_item dis_flex_acenter" href="/2013/04/15/2013-04-15-base64/">
+                    
+                        <span class="al_text_ellipsis al_post_nav_desc">Base64编码</span>
+                        <svg class="al_arrow">
+                            <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-arrow-right"></use>
+                        </svg>
+                    
+                </a>
+            </nav>
+        </div>
+    </div>
+
+
+        <div class="al_index_footer dis_flex_center">
+    <div class="al_index_footer_item al_index_footer_title">
+        John Doe
+    </div>
+
+    
+    
+
+    <div class="al_index_footer_item al_index_footer_extra">
+        Created By 
+        <a target="_blank" rel="noopener" href="https://github.com/iGuan7u/Acetolog">AcetoLog</a>
+         · Power By 
+        <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>
+    </div>
+
+    <div class="al_index_footer_item al_index_footer_extra_right">
+        All Right Reserved
+    </div>
+</div>
+
+        <script type="text/javascript" async="async" src="/javascripts/acelog.js"></script>
+        
+        
+        
+        
+    </body>
+</html>
+        

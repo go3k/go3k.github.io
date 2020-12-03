@@ -1,0 +1,188 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>C/C++中的#、##和__VA_ARGS__</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2.0">
+<link rel="stylesheet", href="/./css/style.css">
+<link rel="shortcut icon", href="/./favicon.ico">
+<link rel="apple-touch-icon", href="/./apple-touch-icon.png">
+
+        
+    
+    <link rel='stylesheet' href="/./css/dracula.css">
+
+    <meta name="generator" content="Hexo 5.2.0"></head>
+    <body>
+        <header class="al_header al_pos_fixed">
+    <div class="al_header_container dis_flex_jcenter">
+        <div class="al_header_container_left">
+            <div class="al_header_site_title">
+                <a href="/">Hexo</a>
+            </div>
+        </div>
+
+        <div class="dis_flex_jcenter">
+            <div class="al_header_setting">
+                <svg class="al_header_icon">
+                    <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-menu"></use>
+                </svg>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="al_sidebar">
+
+    <div class="al_sidebar_overlay al_full_cover"></div>
+
+    <div class="al_pos_fixed al_sidebar_cnt">
+        <div class="dis_flex_acenter al_sidebar_header">
+            <h3>Hexo</h3>
+            <div class="al_sidebar_close al_header_setting">
+                <svg class="al_header_icon">
+                    <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-close"></use>
+                </svg>
+            </div>
+        </div>
+
+        <div class="al_sidebar_author_cnt">
+
+            <div class="al_sidebar_author_info">
+                <h4>John Doe</h4>
+                <img class="al_sidebar_avatar" src="https://yourAvatorURL">
+                <p></p>
+            </div>
+
+            
+        </div>
+    </div>
+</div>
+
+        
+    <div class="dis_flex_center al_lightbox_cnt al_full_cover">
+        <img class="al_lightbox_img"/>
+    </div>
+    <div class="al_page_background dis_flex_center al_full_cover"></div>
+    <div class="al_page_container">
+        <div class="al_pos_ab al_fake_background"></div>
+        <div class="al_main_container al_shadow al_main_page_container">
+            <article class="al_article">
+                <header>
+                    <h1 class="al_page_title">
+                        C/C++中的#、##和__VA_ARGS__
+                    </h1>
+                    <div class="al_page_info dis_flex">
+                        <div class="al_page_content_info">
+                            March 11, 2013 08:03 PM
+                        </div>
+
+                        
+
+                        
+                        <span class="tags"></span>
+                    </div>
+                </header>
+
+                
+                    <div class="al_page_content_outline">
+                        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">#</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#-1"><span class="toc-text">##</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VA-ARGS"><span class="toc-text">__VA_ARGS__</span></a></li></ol>
+                    </div>
+                
+
+                
+                <section id="post-body">
+                    <h2 id=""><a href="#" class="headerlink" title="#"></a><code>#</code></h2><p>#的作用是把符号转化为字符串，例如：</p>
+<pre><code>#define FUN(x) printf(#x)
+//使用
+FUN(2 + 4);
+
+//输出结果，把2 + 4转为“2 + 4”然后打印
+2 + 4</code></pre>
+<h2 id="-1"><a href="#-1" class="headerlink" title="##"></a><code>##</code></h2><p><code>##</code>的作用是联接两个符号，例如：</p>
+<pre><code>#define XNAME(n) x##n
+//使用
+int XNAME(1) = 12;    //意为：int x1 = 12;</code></pre>
+<h2 id="VA-ARGS"><a href="#VA-ARGS" class="headerlink" title="__VA_ARGS__"></a><code>__VA_ARGS__</code></h2><p><code>__VA_ARGS__</code>是可变参数宏，用于对函数原型中<code>…</code>参数的宏替换，常用于<code>printf(…)</code>这种函数的宏定义，例如：</p>
+<blockquote>
+<p>为了方便，做一个printf函数的log开关，定义一个代替printf函数的宏。不想log输出时，将宏定义为空。</p>
+</blockquote>
+<pre><code>#define kDEBUG 0
+#if kDEBUG
+    #define GLOG(…) printf(__VA_ARGS__)
+#else
+    #define GLOG(…)
+#endif</code></pre>
+<p>###一种特殊情况</p>
+<p>有时候需要定义这样的宏，比如：<code>GLOG(format, …)</code> 对应函数<code>printf(const char* a, …)</code></p>
+<p>如果简单的做如下宏定义，就会有一些问题</p>
+<pre><code>#define GLOG(format, …) printf(format, __VA_ARGS__)
+//调用
+GLOG(&quot;abcd&quot;);            //编译错误
+GLOG(&quot;abcd = %d&quot;, 12);    //正常</code></pre>
+<p><code>GLOG(&quot;abcd&quot;)</code>会编译错误，是因为<code>GLOG</code>宏定义中有一个<code>,</code>逗号存在，宏展开以后出现了一个多余的逗号导致编译出错。</p>
+<pre><code>GLOG(&quot;abcd&quot;) -&gt; printf(&quot;abcd&quot;,)</code></pre>
+<p>可以使用<code>##</code>操作符提示编译器，去掉这个逗号。如：</p>
+<pre><code>#define GLOG(format, …) printf(format, ##__VA_ARGS__)</code></pre>
+<p>这样就正常了。</p>
+
+                </section>
+
+                
+                
+                
+
+            </article>
+
+            
+            <nav class="dis_flex al_post_nav">
+                <a class="al_post_nav_item dis_flex_acenter" href="/2013/03/14/2013-03-14-android-crash-call-to-opengl-api-without-a-current-context/">
+                    
+                        <svg class="al_arrow">
+                            <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-arrow-left"></use>
+                        </svg>
+                        <span class="al_text_ellipsis al_post_nav_desc">Android crash “Call to openGL API without a current context”</span>
+                    
+                </a>
+                <a class="al_post_nav_item dis_flex_acenter" href="/2013/03/11/2013-03-11-ios-crashreport/">
+                    
+                        <span class="al_text_ellipsis al_post_nav_desc">处理、分析iOS App的Crash Reports</span>
+                        <svg class="al_arrow">
+                            <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-arrow-right"></use>
+                        </svg>
+                    
+                </a>
+            </nav>
+        </div>
+    </div>
+
+
+        <div class="al_index_footer dis_flex_center">
+    <div class="al_index_footer_item al_index_footer_title">
+        John Doe
+    </div>
+
+    
+    
+
+    <div class="al_index_footer_item al_index_footer_extra">
+        Created By 
+        <a target="_blank" rel="noopener" href="https://github.com/iGuan7u/Acetolog">AcetoLog</a>
+         · Power By 
+        <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>
+    </div>
+
+    <div class="al_index_footer_item al_index_footer_extra_right">
+        All Right Reserved
+    </div>
+</div>
+
+        <script type="text/javascript" async="async" src="/javascripts/acelog.js"></script>
+        
+        
+        
+        
+    </body>
+</html>
+        

@@ -1,0 +1,510 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2.0">
+<link rel="stylesheet", href="/./css/style.css">
+<link rel="shortcut icon", href="/./favicon.ico">
+<link rel="apple-touch-icon", href="/./apple-touch-icon.png">
+
+        
+    <meta name="generator" content="Hexo 5.2.0"></head>
+    <body>
+        <header class="al_header al_pos_fixed">
+    <div class="al_header_container dis_flex_jcenter">
+        <div class="al_header_container_left">
+            <div class="al_header_site_title">
+                <a href="/">Hexo</a>
+            </div>
+        </div>
+
+        <div class="dis_flex_jcenter">
+            <div class="al_header_setting">
+                <svg class="al_header_icon">
+                    <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-menu"></use>
+                </svg>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="al_sidebar">
+
+    <div class="al_sidebar_overlay al_full_cover"></div>
+
+    <div class="al_pos_fixed al_sidebar_cnt">
+        <div class="dis_flex_acenter al_sidebar_header">
+            <h3>Hexo</h3>
+            <div class="al_sidebar_close al_header_setting">
+                <svg class="al_header_icon">
+                    <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-close"></use>
+                </svg>
+            </div>
+        </div>
+
+        <div class="al_sidebar_author_cnt">
+
+            <div class="al_sidebar_author_info">
+                <h4>John Doe</h4>
+                <img class="al_sidebar_avatar" src="https://yourAvatorURL">
+                <p></p>
+            </div>
+
+            
+        </div>
+    </div>
+</div>
+
+        
+    <div class="al_index_background dis_flex_center al_full_cover">
+        <div class="al_pos_ab al_letter al_index_background_letter">
+            A
+        </div>
+        <h2 class="al_index_background_bio">
+            A Simple Theme
+        </h2>
+    </div>
+
+    <div class="al_index_container">
+        <div class="al_pos_ab al_fake_background"></div>
+        <div class="al_main_container al_shadow">
+            <div class="al_section_container dis_flex_jcenter">
+                <div class="section_header">
+                    LATEST PAGES
+                </div>
+            </div>
+
+            <ul class="al_post_list">
+                
+                    <li class="al_index_pageList_item al_index_page_seperator">
+                        <div class="al_index_post_title_cnt dis_flex">
+                            <div class="al_pos_ab al_letter al_index_post_title_letter">
+                                C
+                            </div>
+                            <h2 class="al_index_post_title">
+                                <a href="/2014/08/14/using-pclint-inccx/">
+                                    cocos2d-x使用PC-lint
+                                </a>
+                            </h2>
+                            <div class="al_index_post_extra dis_flex">
+                                <div class="al_index_post_date al_index_post_extra_item">
+                                    2014-08-14 14:08:25
+                                </div>
+
+                                
+
+                            </div>
+                        </div>
+                        <div class="al_index_post_excerpt_cnt">
+                            <p class="al_index_post_excerpt">
+                                
+                            </p>
+                        </div>
+                        <div class="al_index_post_button_cnt dis_flex">
+                            <a class="al_button al_button_theme al_index_post_button" href="2014/08/14/using-pclint-inccx/">
+                                READ ON
+                            </a>
+                            <a class="al_button al_button_transparent al_index_post_button" target="_blank" rel="noopener" href="//getpocket.com/edit?url=http://example.com/">
+                                READ LATER
+                            </a>
+                        </div>
+                    </li>
+                
+                    <li class="al_index_pageList_item al_index_page_seperator">
+                        <div class="al_index_post_title_cnt dis_flex">
+                            <div class="al_pos_ab al_letter al_index_post_title_letter">
+                                I
+                            </div>
+                            <h2 class="al_index_post_title">
+                                <a href="/2013/08/06/2013-08-06-integrate-wxsqlite-into-cocos2d-x/">
+                                    Integrate wxSqlite into Cocos2d-x
+                                </a>
+                            </h2>
+                            <div class="al_index_post_extra dis_flex">
+                                <div class="al_index_post_date al_index_post_extra_item">
+                                    2013-08-06 09:15:00
+                                </div>
+
+                                
+
+                            </div>
+                        </div>
+                        <div class="al_index_post_excerpt_cnt">
+                            <p class="al_index_post_excerpt">
+                                cocos2d-x中使用支持加密扩展的Sqlite简述sqlite小巧快速，非常适合在移动设备上做为复杂数据结构做数据库管理的支持。但是其存储完全明文，寻求数据加密的支持非常必要。
+开始觉得加密这事也不怎么复杂，两种方案：
+数据项加密只对数据表中的数据项加密。
+
+优点：是实现简单，找个加密算法就Ok了；
+缺点：每次数据读写都要做一次加密操作，效率非常低；整个数据库的数据表结构是暴露的。
+
+数据库文件加密对数据文件加密，感觉上实现不复杂，也避免了数据项加密的问题。
+开始想，只要读入文件流，再把流解密，然后用sqlite接口初始化就搞定了。But，sqlite库根本不给你使用流数据初始化的接口。
+wxSqlite3不想重复造轮子，又找了一些资料发现，sqlite3源码本身是支持数据加密扩展的，于是找到了实现加密扩展的库 wxSqlite3。
+它同sqlite3一样，是c语言实现的，跨平台、开源，理论上完全没有问题。
+wxSqlite3源码下载
+                            </p>
+                        </div>
+                        <div class="al_index_post_button_cnt dis_flex">
+                            <a class="al_button al_button_theme al_index_post_button" href="2013/08/06/2013-08-06-integrate-wxsqlite-into-cocos2d-x/">
+                                READ ON
+                            </a>
+                            <a class="al_button al_button_transparent al_index_post_button" target="_blank" rel="noopener" href="//getpocket.com/edit?url=http://example.com/">
+                                READ LATER
+                            </a>
+                        </div>
+                    </li>
+                
+                    <li class="al_index_pageList_item al_index_page_seperator">
+                        <div class="al_index_post_title_cnt dis_flex">
+                            <div class="al_pos_ab al_letter al_index_post_title_letter">
+                                C
+                            </div>
+                            <h2 class="al_index_post_title">
+                                <a href="/2013/07/08/2013-07-08-cocos2dx-pluginx-2/">
+                                    Cocos2d-x PluginX （二）增加新的Plugin
+                                </a>
+                            </h2>
+                            <div class="al_index_post_extra dis_flex">
+                                <div class="al_index_post_date al_index_post_extra_item">
+                                    2013-07-08 06:06:30
+                                </div>
+
+                                
+
+                            </div>
+                        </div>
+                        <div class="al_index_post_excerpt_cnt">
+                            <p class="al_index_post_excerpt">
+                                创建Plugin目录第一步，在plugin/plugins下，目录需要严格按照如下规范实现：
+plugin/plugins/alipay/proj.android
+                     /proj.ios
+因为publish工具是按照这种格式的目录做操作的。
+Android平台能封装的基本都封装好了，需要做的就是创建一个Plugin工程，然后实现对应的Interface接口。
+                            </p>
+                        </div>
+                        <div class="al_index_post_button_cnt dis_flex">
+                            <a class="al_button al_button_theme al_index_post_button" href="2013/07/08/2013-07-08-cocos2dx-pluginx-2/">
+                                READ ON
+                            </a>
+                            <a class="al_button al_button_transparent al_index_post_button" target="_blank" rel="noopener" href="//getpocket.com/edit?url=http://example.com/">
+                                READ LATER
+                            </a>
+                        </div>
+                    </li>
+                
+                    <li class="al_index_pageList_item al_index_page_seperator">
+                        <div class="al_index_post_title_cnt dis_flex">
+                            <div class="al_pos_ab al_letter al_index_post_title_letter">
+                                C
+                            </div>
+                            <h2 class="al_index_post_title">
+                                <a href="/2013/07/08/2013-07-08-cocos2dx-pluginx-1/">
+                                    Cocos2d-x PluginX （一）使用手册
+                                </a>
+                            </h2>
+                            <div class="al_index_post_extra dis_flex">
+                                <div class="al_index_post_date al_index_post_extra_item">
+                                    2013-07-08 03:28:08
+                                </div>
+
+                                
+
+                            </div>
+                        </div>
+                        <div class="al_index_post_excerpt_cnt">
+                            <p class="al_index_post_excerpt">
+                                简介Plugin-x是cocos2d-x最近版本中引入的特性，旨在解决第三方SDK接入的问题，最大程度的简化接入工作，增加可重用性。第一部分主要介绍PluginX如何使用，不涉及设计原理相关内容。
+$&#123;cocos2d-x root&#125;\plugin目录下是PluginX所在位置，从设计和相关文档看感觉这东西相当复杂，但实际上使用起来非常简便。(复杂的设计是为了使用上简单方便)
+前提必要条件是配置好Android开发环境，需要NDK。Win下需要安装Cygwin，Cygwin需要gcc、make包，因为这个模块里的自动化脚本是Unix Shell。
+                            </p>
+                        </div>
+                        <div class="al_index_post_button_cnt dis_flex">
+                            <a class="al_button al_button_theme al_index_post_button" href="2013/07/08/2013-07-08-cocos2dx-pluginx-1/">
+                                READ ON
+                            </a>
+                            <a class="al_button al_button_transparent al_index_post_button" target="_blank" rel="noopener" href="//getpocket.com/edit?url=http://example.com/">
+                                READ LATER
+                            </a>
+                        </div>
+                    </li>
+                
+                    <li class="al_index_pageList_item al_index_page_seperator">
+                        <div class="al_index_post_title_cnt dis_flex">
+                            <div class="al_pos_ab al_letter al_index_post_title_letter">
+                                错
+                            </div>
+                            <h2 class="al_index_post_title">
+                                <a href="/2013/04/07/2013-04-07-cocos2dx-newfeatures/">
+                                    错过的Cocos2d-x更新
+                                </a>
+                            </h2>
+                            <div class="al_index_post_extra dis_flex">
+                                <div class="al_index_post_date al_index_post_extra_item">
+                                    2013-04-07 13:27:02
+                                </div>
+
+                                
+
+                            </div>
+                        </div>
+                        <div class="al_index_post_excerpt_cnt">
+                            <p class="al_index_post_excerpt">
+                                由于一些原因，目前项目使用的cocos2d-x引擎在我保持更新到官方2.0.4版本后，没有继续保持与cocos2d-x官方版本的同步，现在已经落下3个版本了。这是项目经理出于引擎更新时间成本的考虑，所做的决定，当时我也没太重视就表示同意了。But，我现在发觉，这一步错了。
+##Cocos2d-x 2.0.4版本之后的新特性总结一下新版本中的新增的Features，考虑是否多花些时间把引擎代码升级。
+###修复了无数个bug…
+###CocosBuilder相关
+                            </p>
+                        </div>
+                        <div class="al_index_post_button_cnt dis_flex">
+                            <a class="al_button al_button_theme al_index_post_button" href="2013/04/07/2013-04-07-cocos2dx-newfeatures/">
+                                READ ON
+                            </a>
+                            <a class="al_button al_button_transparent al_index_post_button" target="_blank" rel="noopener" href="//getpocket.com/edit?url=http://example.com/">
+                                READ LATER
+                            </a>
+                        </div>
+                    </li>
+                
+                    <li class="al_index_pageList_item al_index_page_seperator">
+                        <div class="al_index_post_title_cnt dis_flex">
+                            <div class="al_pos_ab al_letter al_index_post_title_letter">
+                                A
+                            </div>
+                            <h2 class="al_index_post_title">
+                                <a href="/2013/03/14/2013-03-14-android-crash-call-to-opengl-api-without-a-current-context/">
+                                    Android crash “Call to openGL API without a current context”
+                                </a>
+                            </h2>
+                            <div class="al_index_post_extra dis_flex">
+                                <div class="al_index_post_date al_index_post_extra_item">
+                                    2013-03-14 03:09:43
+                                </div>
+
+                                
+
+                            </div>
+                        </div>
+                        <div class="al_index_post_excerpt_cnt">
+                            <p class="al_index_post_excerpt">
+                                最近在做各种第三方渠道的SDK接入，国内的Android第三方游戏平台实在是多。。。SDK接入的方式实在五花八门，有些SDK做的实在有够烂，做接入实在苦逼。（吐槽完毕）
+之前我做了几个渠道接入和游戏内支付，360、iapppay、Appstore的IAP，已经把客户端结构搭建好、辅助API封闭完毕，服务端也全部调通可以做其它第三方平台接入扩展了。这次就简要说明流程，把任务交下去做了。
+没想到。。
+##Crash原因当乐SDK接入时产生了这个问题，java部分处理完毕，JNI native方法把结果通知到C++后就crash了，日志错误为：
+Call to openGL API without a current context
+                            </p>
+                        </div>
+                        <div class="al_index_post_button_cnt dis_flex">
+                            <a class="al_button al_button_theme al_index_post_button" href="2013/03/14/2013-03-14-android-crash-call-to-opengl-api-without-a-current-context/">
+                                READ ON
+                            </a>
+                            <a class="al_button al_button_transparent al_index_post_button" target="_blank" rel="noopener" href="//getpocket.com/edit?url=http://example.com/">
+                                READ LATER
+                            </a>
+                        </div>
+                    </li>
+                
+                    <li class="al_index_pageList_item al_index_page_seperator">
+                        <div class="al_index_post_title_cnt dis_flex">
+                            <div class="al_pos_ab al_letter al_index_post_title_letter">
+                                处
+                            </div>
+                            <h2 class="al_index_post_title">
+                                <a href="/2013/03/11/2013-03-11-ios-crashreport/">
+                                    处理、分析iOS App的Crash Reports
+                                </a>
+                            </h2>
+                            <div class="al_index_post_extra dis_flex">
+                                <div class="al_index_post_date al_index_post_extra_item">
+                                    2013-03-11 07:45:21
+                                </div>
+
+                                
+
+                            </div>
+                        </div>
+                        <div class="al_index_post_excerpt_cnt">
+                            <p class="al_index_post_excerpt">
+                                ##应用被Reject很不幸，首次的AppStore应用提交失败了。其中一个原因是：游戏中发生Crash。
+2.1: Apps that crash will be rejected.
+苹果审核与结果通知并没有传说中那么BT加无脑，清清楚楚的列出了Reject原因，并为每个问题附带解决方案的建议,崩溃附带crash log。很清晰，很合理。
+##分析Crash reportApple的官方文档：Understanding and Analyzing iOS Application Crash Reports
+iOS设备上，当app崩溃时会创建一个”crash report”文件保存在设备上。Crash report文件记录了，app崩溃时的信息，通常包含每个线程的调用堆栈。
+                            </p>
+                        </div>
+                        <div class="al_index_post_button_cnt dis_flex">
+                            <a class="al_button al_button_theme al_index_post_button" href="2013/03/11/2013-03-11-ios-crashreport/">
+                                READ ON
+                            </a>
+                            <a class="al_button al_button_transparent al_index_post_button" target="_blank" rel="noopener" href="//getpocket.com/edit?url=http://example.com/">
+                                READ LATER
+                            </a>
+                        </div>
+                    </li>
+                
+                    <li class="al_index_pageList_item al_index_page_seperator">
+                        <div class="al_index_post_title_cnt dis_flex">
+                            <div class="al_pos_ab al_letter al_index_post_title_letter">
+                                A
+                            </div>
+                            <h2 class="al_index_post_title">
+                                <a href="/2013/01/16/2013-01-16-devices-udid/">
+                                    Android、iOS设备唯一标识问题
+                                </a>
+                            </h2>
+                            <div class="al_index_post_extra dis_flex">
+                                <div class="al_index_post_date al_index_post_extra_item">
+                                    2013-01-16 09:58:45
+                                </div>
+
+                                
+
+                            </div>
+                        </div>
+                        <div class="al_index_post_excerpt_cnt">
+                            <p class="al_index_post_excerpt">
+                                为了标明用户身份，便于数据统计，设备唯一标识在移动App开发中经常需要用到。
+iOS原本是提供UDID供开发者自由获取设备唯一标识的，但Apple老早就公布将不允许应用程序获取UDID，获取UDID的App已经不能上线AppStore了。
+查了查资料两边实际上情况差不多，大致有如下方案：
+
+IMEI，它是手机设备的标识，并不是所有设备都有IMEI。山寨机甚至有重复的IMEI。
+
+wifi Mac地址，阉割wifi模块的设备也不少。
+
+
+而且这两个值实际上关系用户隐私，并且Android上需要一些权限才能查看，我觉得不太值得。
+
+当然还有生成唯一串，再保存到本地的做法。可是，删除了应用怎么办？
+
+综合考虑，纠结了一下，我觉得使用开源的OpenUDID方案解决。
+它不依赖机器的其它唯一值，并且它能一定程度上保证UDID值唯一且可以持久保持(即使删除也不会改变 )。
+                            </p>
+                        </div>
+                        <div class="al_index_post_button_cnt dis_flex">
+                            <a class="al_button al_button_theme al_index_post_button" href="2013/01/16/2013-01-16-devices-udid/">
+                                READ ON
+                            </a>
+                            <a class="al_button al_button_transparent al_index_post_button" target="_blank" rel="noopener" href="//getpocket.com/edit?url=http://example.com/">
+                                READ LATER
+                            </a>
+                        </div>
+                    </li>
+                
+                    <li class="al_index_pageList_item al_index_page_seperator">
+                        <div class="al_index_post_title_cnt dis_flex">
+                            <div class="al_pos_ab al_letter al_index_post_title_letter">
+                                C
+                            </div>
+                            <h2 class="al_index_post_title">
+                                <a href="/2012/12/11/2012-12-11-jni0/">
+                                    Cocos2d-x中通过JNI进行C++调用Java代码
+                                </a>
+                            </h2>
+                            <div class="al_index_post_extra dis_flex">
+                                <div class="al_index_post_date al_index_post_extra_item">
+                                    2012-12-11 04:16:30
+                                </div>
+
+                                
+
+                            </div>
+                        </div>
+                        <div class="al_index_post_excerpt_cnt">
+                            <p class="al_index_post_excerpt">
+                                主体思路通过JNI获取java虚拟机，再获取当前程序的JNI环境，通过JNI环境获取需要调用的java类信息，再获取需要调用的java类中的函数信息。再通过JNI环境调用，使用类信息、函数信息，调用对应的java函数。看起来好像有点复杂，but不用担心，cocos2d-x中有一个JniHelper类(头文件的copyright为：cocos2d-x.org，是Google提供的还是cocos2d-x小组自己封装的我就不清楚了)，它已经把这些工作封装好了。
+                            </p>
+                        </div>
+                        <div class="al_index_post_button_cnt dis_flex">
+                            <a class="al_button al_button_theme al_index_post_button" href="2012/12/11/2012-12-11-jni0/">
+                                READ ON
+                            </a>
+                            <a class="al_button al_button_transparent al_index_post_button" target="_blank" rel="noopener" href="//getpocket.com/edit?url=http://example.com/">
+                                READ LATER
+                            </a>
+                        </div>
+                    </li>
+                
+                    <li class="al_index_pageList_item al_index_page_seperator">
+                        <div class="al_index_post_title_cnt dis_flex">
+                            <div class="al_pos_ab al_letter al_index_post_title_letter">
+                                C
+                            </div>
+                            <h2 class="al_index_post_title">
+                                <a href="/2012/11/28/2012-11-28-cocos2dx-add-webview/">
+                                    cocos2d-x在iOS/Android双平台上嵌入WebView
+                                </a>
+                            </h2>
+                            <div class="al_index_post_extra dis_flex">
+                                <div class="al_index_post_date al_index_post_extra_item">
+                                    2012-11-28 05:36:42
+                                </div>
+
+                                
+
+                            </div>
+                        </div>
+                        <div class="al_index_post_excerpt_cnt">
+                            <p class="al_index_post_excerpt">
+                                感谢党感谢国家，感谢攀哥、教主、锋哥。
+游戏中的帮助和游戏公告，可以通过嵌入显示WebView的方案来实现，通过编辑HTML来修改、更新公告的样式和内容都很方便。
+iOS平台嵌入iOS平台上的嵌入很顺利，网上有现成的教程加代码，关键是做好OC与C++代码混编的封装。参考如下链接中的实现方式：cocos2d-x 使用UIWebView加载网页
+                            </p>
+                        </div>
+                        <div class="al_index_post_button_cnt dis_flex">
+                            <a class="al_button al_button_theme al_index_post_button" href="2012/11/28/2012-11-28-cocos2dx-add-webview/">
+                                READ ON
+                            </a>
+                            <a class="al_button al_button_transparent al_index_post_button" target="_blank" rel="noopener" href="//getpocket.com/edit?url=http://example.com/">
+                                READ LATER
+                            </a>
+                        </div>
+                    </li>
+                
+            </ul>
+
+            <nav class="dis_flex al_post_nav">
+                <a class="al_post_nav_item dis_flex_acenter" href="tags/cocos2d/page/2/">
+                    
+                </a>
+                <a class="al_post_nav_item dis_flex_acenter" href="tags/cocos2d/page/2/">
+                    
+                        <span>Older Posts</span>
+                        <svg class="al_arrow">
+                            <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-arrow-right"></use>
+                        </svg>
+                    
+                </a>
+            </nav>
+        </div>
+    </div>
+
+        <div class="al_index_footer dis_flex_center">
+    <div class="al_index_footer_item al_index_footer_title">
+        John Doe
+    </div>
+
+    
+    
+
+    <div class="al_index_footer_item al_index_footer_extra">
+        Created By 
+        <a target="_blank" rel="noopener" href="https://github.com/iGuan7u/Acetolog">AcetoLog</a>
+         · Power By 
+        <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>
+    </div>
+
+    <div class="al_index_footer_item al_index_footer_extra_right">
+        All Right Reserved
+    </div>
+</div>
+
+        <script type="text/javascript" async="async" src="/javascripts/acelog.js"></script>
+        
+        
+        
+        
+    </body>
+</html>
+        

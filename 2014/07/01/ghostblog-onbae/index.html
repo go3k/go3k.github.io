@@ -1,0 +1,262 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>BAE搭建Ghost博客指南</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2.0">
+<link rel="stylesheet", href="/./css/style.css">
+<link rel="shortcut icon", href="/./favicon.ico">
+<link rel="apple-touch-icon", href="/./apple-touch-icon.png">
+
+        
+    
+    <link rel='stylesheet' href="/./css/dracula.css">
+
+    <meta name="generator" content="Hexo 5.2.0"></head>
+    <body>
+        <header class="al_header al_pos_fixed">
+    <div class="al_header_container dis_flex_jcenter">
+        <div class="al_header_container_left">
+            <div class="al_header_site_title">
+                <a href="/">Hexo</a>
+            </div>
+        </div>
+
+        <div class="dis_flex_jcenter">
+            <div class="al_header_setting">
+                <svg class="al_header_icon">
+                    <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-menu"></use>
+                </svg>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="al_sidebar">
+
+    <div class="al_sidebar_overlay al_full_cover"></div>
+
+    <div class="al_pos_fixed al_sidebar_cnt">
+        <div class="dis_flex_acenter al_sidebar_header">
+            <h3>Hexo</h3>
+            <div class="al_sidebar_close al_header_setting">
+                <svg class="al_header_icon">
+                    <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-close"></use>
+                </svg>
+            </div>
+        </div>
+
+        <div class="al_sidebar_author_cnt">
+
+            <div class="al_sidebar_author_info">
+                <h4>John Doe</h4>
+                <img class="al_sidebar_avatar" src="https://yourAvatorURL">
+                <p></p>
+            </div>
+
+            
+        </div>
+    </div>
+</div>
+
+        
+    <div class="dis_flex_center al_lightbox_cnt al_full_cover">
+        <img class="al_lightbox_img"/>
+    </div>
+    <div class="al_page_background dis_flex_center al_full_cover"></div>
+    <div class="al_page_container">
+        <div class="al_pos_ab al_fake_background"></div>
+        <div class="al_main_container al_shadow al_main_page_container">
+            <article class="al_article">
+                <header>
+                    <h1 class="al_page_title">
+                        BAE搭建Ghost博客指南
+                    </h1>
+                    <div class="al_page_info dis_flex">
+                        <div class="al_page_content_info">
+                            July 01, 2014 06:07 AM
+                        </div>
+
+                        
+
+                        
+                        <span class="tags"></span>
+                    </div>
+                </header>
+
+                
+                    <div class="al_page_content_outline">
+                        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2%E6%AD%A5%E9%AA%A4"><span class="toc-text">部署步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%9C%A8BAE%E5%90%8E%E5%8F%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E5%B7%A5%E7%A8%8B"><span class="toc-text">1. 在BAE后台初始化工程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E9%83%A8%E7%BD%B2Ghost"><span class="toc-text">2. 部署Ghost</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%8F%AF%E9%80%89-%E5%BC%95%E5%85%A5%E4%BA%91%E5%AD%98%E5%82%A8-%E2%80%94-%E4%B8%83%E7%89%9B%E4%BA%91"><span class="toc-text">3. [可选]引入云存储 — 七牛云</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8%E9%80%94"><span class="toc-text">用途</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%AD%A5%E9%AA%A4"><span class="toc-text">配置步骤</span></a></li></ol></li></ol></li></ol>
+                    </div>
+                
+
+                
+                <section id="post-body">
+                    <p>博客再次搬家了，从Wordpress到Octopress，现在到BAE + Ghost了。Octopress实在是用不下去了，所谓“像黑客一样写博客”败给了蜗牛一样的访问速度，想cool也cool不起来。调研了一堆的博客系统(真是一堆，太特么多了。<a target="_blank" rel="noopener" href="http://www.zhihu.com/question/21981094">知乎体方案对比</a>)，主要几个有兴趣的做了下对比：</p>
+<ol>
+<li><p>Ghost</p>
+<p> 它是一个node.js实现的简化wordpress。BAE可支持其运行，BAE访问速度非常快，ping值几乎10ms以内。BAE需要付费，但很便宜。缺点是还很简单，需要改进。</p>
+</li>
+<li><p>Jekyll系，如：Octopress</p>
+<p> 我很喜欢它的使用方式，非常cool非常hacker，但是要托管在Github，访问速度难以忍受，并不时被墙。而且文章多过以后，编译速度非常慢。</p>
+</li>
+<li><p>FarBox</p>
+<p> 以Dropbox API为基础的博客应用，本地的markdown文件直接解析为博文显示，照片目录直接当作相册，完全的一键式博客。唯一问题是访问速度慢。</p>
+</li>
+</ol>
+<p>三者对比下来，BAE + Ghost最靠谱，因为速度是最重要的，其它一切都是浮云。OK，动机明确，搬！</p>
+<h2 id="部署步骤"><a href="#部署步骤" class="headerlink" title="部署步骤"></a>部署步骤</h2><h3 id="1-在BAE后台初始化工程"><a href="#1-在BAE后台初始化工程" class="headerlink" title="1. 在BAE后台初始化工程"></a>1. 在BAE后台初始化工程</h3><p><a target="_blank" rel="noopener" href="http://developer.baidu.com/wiki/index.php?title=docs/cplat/bae/start">BAE Ghost官方教学</a></p>
+<p>按照官方教学步骤，创建应用、添加部署、Check代码。在此之后的内容，BAE的文档就写的不清不楚，又有些啰嗦了，只能当作参考。</p>
+<h3 id="2-部署Ghost"><a href="#2-部署Ghost" class="headerlink" title="2. 部署Ghost"></a>2. 部署Ghost</h3><ul>
+<li><p>初始代码有3个文件：<code>app.conf、package.json、server.js</code>。</p>
+</li>
+<li><p>下载Ghost包，<a target="_blank" rel="noopener" href="https://ghost.org/download/">Ghost官网</a>, <a target="_blank" rel="noopener" href="https://github.com/TryGhost/Ghost">Github</a>，直接解压到初始代码的文件夹。</p>
+</li>
+<li><p><code>config.example.js</code>改名为<code>config.js</code>，将其中的port（值2368或2369）全部替换成18080。</p>
+</li>
+<li><p>将<code>package.json</code>中的”start”: “node index”改为”start”: “node index.js”。</p>
+</li>
+<li><p>使用MySQL</p>
+<ul>
+<li><p>按照<a target="_blank" rel="noopener" href="http://developer.baidu.com/wiki/index.php?title=docs/cplat/bae/mysql">BAE mysql教程</a>，创建MySQL扩展服务。</p>
+</li>
+<li><p>修改<code>config.js</code>，将其中：</p>
+<pre><code>  database: &#123;
+      client: &#39;sqlite3&#39;,
+      connection: &#123;
+          filename: path.join(__dirname, &#39;/content/data/ghost-dev.db&#39;)
+      &#125;,
+      debug: false
+  &#125;,</code></pre>
+<p>  修改为：</p>
+<pre><code>  database: &#123;
+      client: &#39;mysql&#39;,
+      connection: &#123;
+          host: &#39;sqld.duapp.com&#39;,
+          port: 4050,
+          user: &#39;xxxxxx&#39;, //your ak
+          password: &#39;xxxxxx&#39;, //your sk
+          database: &#39;xxxxxx&#39;,//your dbname
+          charset: &#39;utf8&#39;
+      &#125;,
+      debug: false
+  &#125;,</code></pre>
+</li>
+<li><p>将package.json中有关sqlite的部分删除，已经完全不需要它了。</p>
+</li>
+<li><p>在本地执行<code>npm install --production</code>，安装<code>package.json</code>中定义的所有依赖，用<a target="_blank" rel="noopener" href="http://bcs.duapp.com/baev3demo/nodejs-web/mysql.tgz">mysql.tgz</a>替换node_modules中的mysql。</p>
+</li>
+</ul>
+</li>
+<li><p>删除<code>package.json</code>中的<code>dependencies</code>，<code>optionalDependencies</code>和<code>devDependencies</code>项，删除后的<code>package.json</code>内容如下：</p>
+<pre><code>      &#123;
+          &quot;name&quot;: &quot;ghost&quot;,
+          &quot;version&quot;: &quot;0.3.3&quot;,
+          &quot;private&quot;: true,
+          &quot;scripts&quot;: &#123;
+              &quot;start&quot;: &quot;node index.js&quot;,
+              &quot;test&quot;: &quot;grunt validate --verbose&quot;
+          &#125;,
+          &quot;engines&quot;: &#123;
+              &quot;node&quot;: &quot;&gt;=0.10.* &lt;0.11.4&quot;
+          &#125;,
+          &quot;engineStrict&quot;: true
+      &#125;</code></pre>
+</li>
+<li><p>所有修改均已完成，保存所有修改，提交全部代码到服务器。</p>
+</li>
+<li><p>进入BAE后台，相应部署的状态栏会显示“有新版”，此时点击“快捷发布”即可上线。</p>
+</li>
+<li><p>一切顺利的话，站点就可以正常访问并使用了。<code>your.domain.xx/ghost</code>可进入Ghost管理后台。</p>
+</li>
+</ul>
+<blockquote>
+<p>BAE的应用引擎默认是不能保存静态文件的(需要另外开通云存储)，而sqlite是以一个.db文件的方式存在的，所以一定要使用MySQL做为数据库，否则不能保存博客内容。</p>
+</blockquote>
+<h3 id="3-可选-引入云存储-—-七牛云"><a href="#3-可选-引入云存储-—-七牛云" class="headerlink" title="3. [可选]引入云存储 — 七牛云"></a>3. [可选]引入云存储 — 七牛云</h3><p>BAE云存储需要另外收费，计费标准比较恶心，我觉得非常不划算。这里我选用七牛云，我认为从各方面来讲它都能甩BAE的云存储几条街，并且标准用户的免费额度如下图：</p>
+<p><img src="./img/qiniu.png" alt="qiniu"></p>
+<h4 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h4><p>主要可以解决图片上传的问题，引入该配置后，从Ghost上传的图片可以自动保存到七牛云，无需手动上传图片后再复制外链。</p>
+<h4 id="配置步骤"><a href="#配置步骤" class="headerlink" title="配置步骤"></a>配置步骤</h4><p>七牛版Ghost源码地址为：<a target="_blank" rel="noopener" href="https://github.com/ghostchina/Ghost-0.4.2-qiniu">七牛版Ghost Github地址</a>，按以下步骤合并本地ghost和七牛版ghost。</p>
+<ul>
+<li><p>在 <code>core/server/storage</code> 目录增加 <code>qiniu.js</code> 文件。</p>
+</li>
+<li><p>修改 <code>core/server/storage/index.js</code> 文件，以支持加载 <code>qiniu.js</code> 存储类。直接使用七版文件替换它即可。</p>
+</li>
+<li><p>修改<code>config.js</code>，按照七牛版的<code>config.example.js</code>来修改:</p>
+<pre><code>  qiniu: &#123;
+      bucketname: &#39;my-first-bucket&#39;, //空间名称
+      ACCESS_KEY: &#39;xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&#39;, //具体含义请参考七牛的文档
+      SECRET_KEY: &#39;xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&#39;,
+      root: &#39;/images/&#39;, //文件存储在哪个目录。可以设置为 `/` 表示存储在根目录
+      prefix: &#39;http://cdn.my-domainname.com&#39;  //上传的文件的 URL 前缀，可以是你自己绑定的二级域名或者七牛云默认分配的二级域名。文件最中的 URL 为：prefix + root + md5(file) + extension
+      例如：http://cdn.my-domainname.com/images/a/ab/dqwerqwetetqwedfasdf.png
+  &#125;</code></pre>
+</li>
+<li><p>修改 <code>package.json</code> 文件，增加了对 <code>qiniu</code> npm包的依赖。将七牛版<code>dependencies</code>、<code>devDependencies</code>部分内容复制到本地<code>package.json</code>文件。本地再次运行<code>npm install --production</code>，安装<code>qiniu</code>相关的包依赖。</p>
+</li>
+<li><p>安装完成后，再次删除<code>package.json</code>中的<code>dependencies</code>，<code>optionalDependencies</code>和<code>devDependencies</code>项，将所有修改提交。</p>
+</li>
+<li><p>再次发布新版，七牛同步版就完成了。</p>
+</li>
+</ul>
+
+                </section>
+
+                
+                
+                
+
+            </article>
+
+            
+            <nav class="dis_flex al_post_nav">
+                <a class="al_post_nav_item dis_flex_acenter" href="/2014/07/24/political-correctness/">
+                    
+                        <svg class="al_arrow">
+                            <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-arrow-left"></use>
+                        </svg>
+                        <span class="al_text_ellipsis al_post_nav_desc">什么叫政治正确？</span>
+                    
+                </a>
+                <a class="al_post_nav_item dis_flex_acenter" href="/2014/05/28/jenovachen-meeting/">
+                    
+                        <span class="al_text_ellipsis al_post_nav_desc">听陈星汉分享沙龙有感</span>
+                        <svg class="al_arrow">
+                            <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-arrow-right"></use>
+                        </svg>
+                    
+                </a>
+            </nav>
+        </div>
+    </div>
+
+
+        <div class="al_index_footer dis_flex_center">
+    <div class="al_index_footer_item al_index_footer_title">
+        John Doe
+    </div>
+
+    
+    
+
+    <div class="al_index_footer_item al_index_footer_extra">
+        Created By 
+        <a target="_blank" rel="noopener" href="https://github.com/iGuan7u/Acetolog">AcetoLog</a>
+         · Power By 
+        <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>
+    </div>
+
+    <div class="al_index_footer_item al_index_footer_extra_right">
+        All Right Reserved
+    </div>
+</div>
+
+        <script type="text/javascript" async="async" src="/javascripts/acelog.js"></script>
+        
+        
+        
+        
+    </body>
+</html>
+        

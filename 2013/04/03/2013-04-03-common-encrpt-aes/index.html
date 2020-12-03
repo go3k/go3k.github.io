@@ -1,0 +1,185 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>常用加密算法 - AES</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2.0">
+<link rel="stylesheet", href="/./css/style.css">
+<link rel="shortcut icon", href="/./favicon.ico">
+<link rel="apple-touch-icon", href="/./apple-touch-icon.png">
+
+        
+    
+    <link rel='stylesheet' href="/./css/dracula.css">
+
+    <meta name="generator" content="Hexo 5.2.0"></head>
+    <body>
+        <header class="al_header al_pos_fixed">
+    <div class="al_header_container dis_flex_jcenter">
+        <div class="al_header_container_left">
+            <div class="al_header_site_title">
+                <a href="/">Hexo</a>
+            </div>
+        </div>
+
+        <div class="dis_flex_jcenter">
+            <div class="al_header_setting">
+                <svg class="al_header_icon">
+                    <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-menu"></use>
+                </svg>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="al_sidebar">
+
+    <div class="al_sidebar_overlay al_full_cover"></div>
+
+    <div class="al_pos_fixed al_sidebar_cnt">
+        <div class="dis_flex_acenter al_sidebar_header">
+            <h3>Hexo</h3>
+            <div class="al_sidebar_close al_header_setting">
+                <svg class="al_header_icon">
+                    <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-close"></use>
+                </svg>
+            </div>
+        </div>
+
+        <div class="al_sidebar_author_cnt">
+
+            <div class="al_sidebar_author_info">
+                <h4>John Doe</h4>
+                <img class="al_sidebar_avatar" src="https://yourAvatorURL">
+                <p></p>
+            </div>
+
+            
+        </div>
+    </div>
+</div>
+
+        
+    <div class="dis_flex_center al_lightbox_cnt al_full_cover">
+        <img class="al_lightbox_img"/>
+    </div>
+    <div class="al_page_background dis_flex_center al_full_cover"></div>
+    <div class="al_page_container">
+        <div class="al_pos_ab al_fake_background"></div>
+        <div class="al_main_container al_shadow al_main_page_container">
+            <article class="al_article">
+                <header>
+                    <h1 class="al_page_title">
+                        常用加密算法 - AES
+                    </h1>
+                    <div class="al_page_info dis_flex">
+                        <div class="al_page_content_info">
+                            April 02, 2013 06:04 PM
+                        </div>
+
+                        
+
+                        
+                        <span class="tags"></span>
+                    </div>
+                </header>
+
+                
+
+                
+                <section id="post-body">
+                    <p>##AES<br>Advanced Encryption Standard，又称Rijndael加密法，是一种对称加密算法。这个标准用来替代原先的DES，已经被多方分析且广为全世界所使用。</p>
+<p>AES算法密钥长度可以是128比特、192比特、256比特。<br>###算法原理<br>只讲原理，也只能讲原理。。。目前的数学水平已经不能再深入这个算法原理了。</p>
+<ul>
+<li>对称加密，简单来说就是加密、解密使用同一个密钥，经过一个可逆的算法对数据加、解密。</li>
+</ul>
+<blockquote>
+<p>什么算法呢？一会说。</p>
+</blockquote>
+<a id="more"></a>
+
+<p>AES是基于分组加密的，分组加密是：</p>
+<ul>
+<li>选取固定长度的密钥，以密钥长度为单位对明文数据进行分组；(不够做数据补齐)</li>
+<li>使用密钥对每个分组的数据进行加密；加密算法以密钥、明文分组为输入，以密文组为输出；</li>
+<li>生成的密文与明文块长度一样；所有密文组并在一起，就是最终输出的密文。</li>
+</ul>
+<p>以AES 128位密钥为例：以128 bit为一组进行加密，就是每次加密16个字节，因此每次输入16个字节的明文输出16个字节密文；如果明文是32个字节，那么分成两组依次进行加密。</p>
+<p>####什么加密算法呢？</p>
+<p>AES算法是基于置换和代替的。置换是数据的重新排列，而代替是用一个单元数据替换另一个。原理就这么简单，但如何保证算法可逆又可靠呢？这个我分析不能。。。</p>
+<p><strong>据置换和代替方式的不同，有几种加密模式：</strong></p>
+<ul>
+<li><p>ECB 不是特别可靠，例如：如果输入明文<code>12345678123456781234567812345678</code>，算法生成unsigned char型密文打印结果为：</p>
+<pre><code>  231  112  41  149  134  190  231  4  248  190  183  7  198  137  19  77  
+  231  112  41  149  134  190  231  4  248  190  183  7  198  137  19  77</code></pre>
+<p>这已经能看出密文规律了，于是有了其它模式来解决这个问题。</p>
+</li>
+<li><p>CBC 要求给一个初始化的向量，然后将每个输出与该向量作运算，并将运算的结果作为下一个加密块的初始化向量</p>
+</li>
+<li><p>CFB 和 OFB 则不需要提供初始化向量，直接将密码或者输出作为初始化向量进行运算</p>
+</li>
+</ul>
+<p>###数据补齐<br>因为明文长度不固定，会出现不能完全分组的情况，这时候就要把数据补齐到密钥长度的整数倍。数据补齐有一些方式：PKCS5,PKCS7等等，有些实现默认补齐\0。</p>
+<p>###算法实现<br>网上搜了搜C/C++实现，貌似OpenSSL中的实现不错，可以使用整个OpenSSL库，或者从中抽取AES部分单独使用。</p>
+<p><a target="_blank" rel="noopener" href="http://www.openssl.org/">OpenSSL官网</a></p>
+
+                </section>
+
+                
+                
+                
+
+            </article>
+
+            
+            <nav class="dis_flex al_post_nav">
+                <a class="al_post_nav_item dis_flex_acenter" href="/2013/04/07/2013-04-07-cocos2dx-newfeatures/">
+                    
+                        <svg class="al_arrow">
+                            <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-arrow-left"></use>
+                        </svg>
+                        <span class="al_text_ellipsis al_post_nav_desc">错过的Cocos2d-x更新</span>
+                    
+                </a>
+                <a class="al_post_nav_item dis_flex_acenter" href="/2013/03/28/2013-03-28-fallinlove/">
+                    
+                        <span class="al_text_ellipsis al_post_nav_desc">怦然心动</span>
+                        <svg class="al_arrow">
+                            <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-arrow-right"></use>
+                        </svg>
+                    
+                </a>
+            </nav>
+        </div>
+    </div>
+
+
+        <div class="al_index_footer dis_flex_center">
+    <div class="al_index_footer_item al_index_footer_title">
+        John Doe
+    </div>
+
+    
+    
+
+    <div class="al_index_footer_item al_index_footer_extra">
+        Created By 
+        <a target="_blank" rel="noopener" href="https://github.com/iGuan7u/Acetolog">AcetoLog</a>
+         · Power By 
+        <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>
+    </div>
+
+    <div class="al_index_footer_item al_index_footer_extra_right">
+        All Right Reserved
+    </div>
+</div>
+
+        <script type="text/javascript" async="async" src="/javascripts/acelog.js"></script>
+        
+        
+        
+        
+    </body>
+</html>
+        

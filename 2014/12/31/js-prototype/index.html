@@ -1,0 +1,255 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>JavaScript prototype</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2.0">
+<link rel="stylesheet", href="/./css/style.css">
+<link rel="shortcut icon", href="/./favicon.ico">
+<link rel="apple-touch-icon", href="/./apple-touch-icon.png">
+
+        
+    
+    <link rel='stylesheet' href="/./css/dracula.css">
+
+    <meta name="generator" content="Hexo 5.2.0"></head>
+    <body>
+        <header class="al_header al_pos_fixed">
+    <div class="al_header_container dis_flex_jcenter">
+        <div class="al_header_container_left">
+            <div class="al_header_site_title">
+                <a href="/">Hexo</a>
+            </div>
+        </div>
+
+        <div class="dis_flex_jcenter">
+            <div class="al_header_setting">
+                <svg class="al_header_icon">
+                    <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-menu"></use>
+                </svg>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="al_sidebar">
+
+    <div class="al_sidebar_overlay al_full_cover"></div>
+
+    <div class="al_pos_fixed al_sidebar_cnt">
+        <div class="dis_flex_acenter al_sidebar_header">
+            <h3>Hexo</h3>
+            <div class="al_sidebar_close al_header_setting">
+                <svg class="al_header_icon">
+                    <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-close"></use>
+                </svg>
+            </div>
+        </div>
+
+        <div class="al_sidebar_author_cnt">
+
+            <div class="al_sidebar_author_info">
+                <h4>John Doe</h4>
+                <img class="al_sidebar_avatar" src="https://yourAvatorURL">
+                <p></p>
+            </div>
+
+            
+        </div>
+    </div>
+</div>
+
+        
+    <div class="dis_flex_center al_lightbox_cnt al_full_cover">
+        <img class="al_lightbox_img"/>
+    </div>
+    <div class="al_page_background dis_flex_center al_full_cover"></div>
+    <div class="al_page_container">
+        <div class="al_pos_ab al_fake_background"></div>
+        <div class="al_main_container al_shadow al_main_page_container">
+            <article class="al_article">
+                <header>
+                    <h1 class="al_page_title">
+                        JavaScript prototype
+                    </h1>
+                    <div class="al_page_info dis_flex">
+                        <div class="al_page_content_info">
+                            December 31, 2014 06:12 AM
+                        </div>
+
+                        
+
+                        
+                        <span class="tags"></span>
+                    </div>
+                </header>
+
+                
+                    <div class="al_page_content_outline">
+                        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7%E6%9F%A5%E6%89%BE%E8%A7%84%E5%88%99"><span class="toc-text">属性查找规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E5%9E%8B%E7%BB%A7%E6%89%BF%E6%A8%A1%E5%9E%8B"><span class="toc-text">原型继承模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-text">示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="toc-text">数据模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%B3%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">想到的问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF"><span class="toc-text">一些常见错误</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%99%E8%AF%AF1"><span class="toc-text">错误1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%99%E8%AF%AF2"><span class="toc-text">错误2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%B8%80%E4%B8%8B"><span class="toc-text">思考一下</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-text">参考资料</span></a></li></ol>
+                    </div>
+                
+
+                
+                <section id="post-body">
+                    <p>JavaScript不包含传统的类型继承模型，而是使用prototype原型模型，并且JavaScript是唯一一个被广泛使用的基于原型继承的语言。所以通过JavaScript理解这两种继承模式的差异会有难度，但也相当有必要。</p>
+<h2 id="属性查找规则"><a href="#属性查找规则" class="headerlink" title="属性查找规则"></a>属性查找规则</h2><p>这是整个原型继承的基础。</p>
+<ol>
+<li>先查找对象本身的所有属性。</li>
+<li>查找原型对象的所有属性，并继续向上遍历原型链，直到找到指定名称的属性为止。</li>
+<li>查找到达原型链的顶部，也就是 Object.prototype，但是仍然没有找到指定的属性，就会返回 undefined。</li>
+</ol>
+<h2 id="原型继承模型"><a href="#原型继承模型" class="headerlink" title="原型继承模型"></a>原型继承模型</h2><p>每个函数都有一个prototype属性，它的值就是原型对象，像正常对象一样它可以包含方法和属性。将这个函数用作构造函数调用(使用new调用)的时候，新创建的对象可以继承原型上的属性和方法。</p>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><pre><code>function People(name) &#123;
+    this.name = name;
+
+    this.say = function () &#123;
+        console.log(&quot;Hello! I am &quot; + this.name);
+    &#125;
+&#125;
+//共享的原型属性
+People.prototype.gender = &quot;male&quot;;
+People.prototype.shareSay = function () &#123;
+    console.log(&quot;I am &quot; + this.name);
+&#125;
+
+var p1 = new People(&quot;Ming&quot;);
+var p2 = new People(&quot;Liang&quot;);
+//调用对象自身的say
+p1.say();//&quot;Hello! I am Ming&quot;
+p2.say();//&quot;Hello! I am Liang&quot;
+//调用原型中的shareSay
+p1.shareSay();//&quot;I am Ming&quot;
+p2.shareSay();//&quot;I am Liang&quot;
+
+console.log(p1.gender + &quot;, &quot; + p2.gender);//male, male
+//修改原型中的属性
+People.prototype.gender = &quot;female&quot;;
+console.log(p1.gender + &quot;, &quot; + p2.gender);//female, female</code></pre>
+<p>简单的示例中不难看出，对象p1,p2共享gender和shareSay属性，p1和p2指向相同的原型对象。</p>
+<h3 id="数据模型"><a href="#数据模型" class="headerlink" title="数据模型"></a>数据模型</h3><p>这是通过Chrome浏览器调试查看的完整对象信息：</p>
+<ul>
+<li>People函数：</li>
+</ul>
+<p><img src="./img/prototype3.png" alt="People Model"></p>
+<ul>
+<li>以People为构造函数创建的对象p1：</li>
+</ul>
+<p><img src="./img/prototype4.png" alt="People Model"></p>
+<p>继承原理总结如下：</p>
+<ol>
+<li><p>每个对象都有<code>__proto__</code>属性，指向对象的原型，属性查找时以此进行链式查找。</p>
+</li>
+<li><p>对象的<code>__proto__</code>值为构造函数的<code>prototype</code>属性。</p>
+</li>
+<li><p>每个函数都有<code>prototype</code>属性，也就是我们在代码中操作的表示原型对象的属性。</p>
+</li>
+<li><p>默认情况下，函数对象的<code>prototype</code>值为：</p>
+<ul>
+<li><code>constructor</code>属性：指向当前函数</li>
+<li><code>__proto__</code>属性：<code>Object.prototype</code></li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p><code>__proto__</code>属性属于隐含属性，正常情况下不要直接使用或修改。</p>
+</blockquote>
+<h3 id="想到的问题"><a href="#想到的问题" class="headerlink" title="想到的问题"></a>想到的问题</h3><p>我认为一个好的学习方法是自己产生一些问题，然后通过一系列基础理论解决疑问，直到没有疑问。这样就把东西学通了。</p>
+<p><code>new</code>操作的过程是怎样的？<code>constructor</code>、<code>__proto__</code>的值是如何确定的？</p>
+<blockquote>
+<p>new操作的过程：</p>
+<ol>
+<li>一个对象会被创建，构造函数即是<code>new</code>后面的函数，该对象的<code>__proto__</code>赋值为构造函数的<code>prototype</code>属性。</li>
+<li>构造函数被执行，上下文的<code>this</code>被指定为新创建的对象。</li>
+<li>如果构造函数有返回值，那么它会取代<code>new</code>创建的对象。</li>
+</ol>
+</blockquote>
+<h2 id="一些常见错误"><a href="#一些常见错误" class="headerlink" title="一些常见错误"></a>一些常见错误</h2><p>学习过程中搜索了一些比较热门的博客文章，经过多方学习与理解之后，却发现有些文章的解释有些错误。大家可以通过这些问题，检验一下对prototype的理解。</p>
+<h3 id="错误1"><a href="#错误1" class="headerlink" title="错误1"></a>错误1</h3><blockquote>
+<p>每个对象都有一个 constructor 属性,用于指向创建其的函数对象,如上例中的 fun.constructor 指向的 就是 Person.</p>
+</blockquote>
+<p>这样的说法非常常见，但实际上对象本身没有constructor属性，如图所示：</p>
+<p><img src="./img/prototype1.png" alt="prototype inner"></p>
+<p>这是通过Chrome浏览器调试查看的对象信息。图上可以发现，对象me本身并没有<code>constructor</code>，而<code>__proto__</code>属性中存在<code>constructor</code>属性，所以<code>constructor</code>是通过查找调用到prototype中属性的。</p>
+<h3 id="错误2"><a href="#错误2" class="headerlink" title="错误2"></a>错误2</h3><blockquote>
+<p>函数自身声明的方法和属性是 静态的</p>
+</blockquote>
+<p>继续之前的示例代码：</p>
+<pre><code>People.walk = function () &#123;
+    console.log(&quot;step.&quot;);
+&#125;
+
+p1.walk();//error: function undefined
+People.walk();//&quot;step.&quot;</code></pre>
+<p>示例代码中p1并不能调用walk方法，这个现象还是函数调用的搜索方式决定的。调用walk时，先从p1中找属性，发现没有。再到proto中找属性，没有，继续遍历proto找属性。很显然该属性不存在。</p>
+<h3 id="思考一下"><a href="#思考一下" class="headerlink" title="思考一下"></a>思考一下</h3><pre><code>function Men(name) &#123;
+    this.name = name;
+&#125;
+
+Men.prototype = new People();
+var m1 = new Men(&quot;Yue&quot;);
+m1.say();</code></pre>
+<p>对象<code>m1</code>的数据模型是什么样的？<code>m1.constructor</code>指向什么？</p>
+<p><a href="./img/prototype5.png">答案</a></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="http://www.cnblogs.com/mindsbook/archive/2009/09/19/javascriptYouMustKnowPrototype.html">1 javascript必知必会之prototype</a></p>
+
+                </section>
+
+                
+                
+                
+
+            </article>
+
+            
+            <nav class="dis_flex al_post_nav">
+                <a class="al_post_nav_item dis_flex_acenter" href="/2015/01/11/to-the-moon/">
+                    
+                        <svg class="al_arrow">
+                            <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-arrow-left"></use>
+                        </svg>
+                        <span class="al_text_ellipsis al_post_nav_desc">To the moon</span>
+                    
+                </a>
+                <a class="al_post_nav_item dis_flex_acenter" href="/2014/12/11/learn-sketch/">
+                    
+                        <span class="al_text_ellipsis al_post_nav_desc">学画记录</span>
+                        <svg class="al_arrow">
+                            <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-arrow-right"></use>
+                        </svg>
+                    
+                </a>
+            </nav>
+        </div>
+    </div>
+
+
+        <div class="al_index_footer dis_flex_center">
+    <div class="al_index_footer_item al_index_footer_title">
+        John Doe
+    </div>
+
+    
+    
+
+    <div class="al_index_footer_item al_index_footer_extra">
+        Created By 
+        <a target="_blank" rel="noopener" href="https://github.com/iGuan7u/Acetolog">AcetoLog</a>
+         · Power By 
+        <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>
+    </div>
+
+    <div class="al_index_footer_item al_index_footer_extra_right">
+        All Right Reserved
+    </div>
+</div>
+
+        <script type="text/javascript" async="async" src="/javascripts/acelog.js"></script>
+        
+        
+        
+        
+    </body>
+</html>
+        

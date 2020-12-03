@@ -1,0 +1,536 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Cocos2d-x中通过JNI进行C++调用Java代码</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2.0">
+<link rel="stylesheet", href="/./css/style.css">
+<link rel="shortcut icon", href="/./favicon.ico">
+<link rel="apple-touch-icon", href="/./apple-touch-icon.png">
+
+        
+    
+    <link rel='stylesheet' href="/./css/dracula.css">
+
+    <meta name="generator" content="Hexo 5.2.0"></head>
+    <body>
+        <header class="al_header al_pos_fixed">
+    <div class="al_header_container dis_flex_jcenter">
+        <div class="al_header_container_left">
+            <div class="al_header_site_title">
+                <a href="/">Hexo</a>
+            </div>
+        </div>
+
+        <div class="dis_flex_jcenter">
+            <div class="al_header_setting">
+                <svg class="al_header_icon">
+                    <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-menu"></use>
+                </svg>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="al_sidebar">
+
+    <div class="al_sidebar_overlay al_full_cover"></div>
+
+    <div class="al_pos_fixed al_sidebar_cnt">
+        <div class="dis_flex_acenter al_sidebar_header">
+            <h3>Hexo</h3>
+            <div class="al_sidebar_close al_header_setting">
+                <svg class="al_header_icon">
+                    <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-close"></use>
+                </svg>
+            </div>
+        </div>
+
+        <div class="al_sidebar_author_cnt">
+
+            <div class="al_sidebar_author_info">
+                <h4>John Doe</h4>
+                <img class="al_sidebar_avatar" src="https://yourAvatorURL">
+                <p></p>
+            </div>
+
+            
+        </div>
+    </div>
+</div>
+
+        
+    <div class="dis_flex_center al_lightbox_cnt al_full_cover">
+        <img class="al_lightbox_img"/>
+    </div>
+    <div class="al_page_background dis_flex_center al_full_cover"></div>
+    <div class="al_page_container">
+        <div class="al_pos_ab al_fake_background"></div>
+        <div class="al_main_container al_shadow al_main_page_container">
+            <article class="al_article">
+                <header>
+                    <h1 class="al_page_title">
+                        Cocos2d-x中通过JNI进行C++调用Java代码
+                    </h1>
+                    <div class="al_page_info dis_flex">
+                        <div class="al_page_content_info">
+                            December 10, 2012 08:12 PM
+                        </div>
+
+                        
+
+                        
+                        <span class="tags"></span>
+                    </div>
+                </header>
+
+                
+                    <div class="al_page_content_outline">
+                        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BB%E4%BD%93%E6%80%9D%E8%B7%AF"><span class="toc-text">主体思路</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JniHelper%E7%B1%BB%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">JniHelper类的使用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#getStaticMethodInfo%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3"><span class="toc-text">getStaticMethodInfo参数详解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#java%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B%E5%AF%B9%E5%BA%94%E7%9A%84%E7%AE%80%E5%86%99%E5%A6%82%E4%B8%8B%EF%BC%9A"><span class="toc-text">java中的类型对应的简写如下：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%BD%E6%95%B0"><span class="toc-text">多参数的函数</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%80%9A%E8%BF%87JNIEnv%E8%BF%9B%E8%A1%8C%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8"><span class="toc-text">通过JNIEnv进行函数调用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92"><span class="toc-text">参数传递</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#string%E7%B1%BB%E5%9E%8B%E7%9A%84%E8%BD%AC%E6%8D%A2"><span class="toc-text">string类型的转换</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9D%9E%E9%9D%99%E6%80%81%E5%87%BD%E6%95%B0%E7%9A%84%E8%B0%83%E7%94%A8"><span class="toc-text">非静态函数的调用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%A6%E5%B0%BD%E7%9A%84%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81"><span class="toc-text">详尽的示例代码</span></a></li></ol>
+                    </div>
+                
+
+                
+                <section id="post-body">
+                    <h1 id="主体思路"><a href="#主体思路" class="headerlink" title="主体思路"></a>主体思路</h1><p>通过JNI获取java虚拟机，再获取当前程序的JNI环境，通过JNI环境获取需要调用的java类信息，再获取需要调用的java类中的函数信息。再通过JNI环境调用，使用类信息、函数信息，调用对应的java函数。<br>看起来好像有点复杂，but不用担心，cocos2d-x中有一个JniHelper类(头文件的copyright为：cocos2d-x.org，是Google提供的还是cocos2d-x小组自己封装的我就不清楚了)，它已经把这些工作封装好了。</p>
+<a id="more"></a>
+
+
+<h1 id="JniHelper类的使用"><a href="#JniHelper类的使用" class="headerlink" title="JniHelper类的使用"></a>JniHelper类的使用</h1><p>加入如下头文件：</p>
+<pre><code>#include &quot;platform/android/jni/JniHelper.h&quot;</code></pre>
+<p>需要使用的接口如下：</p>
+<pre><code>static bool getStaticMethodInfo(JniMethodInfo &amp;methodinfo, const char *className, const char *methodName, const char *paramCode);
+static bool getMethodInfo(JniMethodInfo &amp;methodinfo, const char *className, const char *methodName, const char *paramCode);</code></pre>
+<p>实现上我们只需要使用上面这两个接口，就可以获取java类的所有函数信息了。JNI环境的获取、各种错误处理都已经在这两个接口实现中封装好了。<br>先上代码，再来依次讲解每个参数的意义和使用方法：</p>
+<pre><code>  //函数信息结构体
+  JniMethodInfo minfo;
+  bool isHave = JniHelper::getStaticMethodInfo(minfo,/*JniMethodInfo的引用*/
+                                               &quot;com/omega/MyApp&quot;,/*类的路径*/
+                                               &quot;getJavaActivity&quot;,/*函数名*/
+                                               &quot;()Ljava/lang/Object;&quot;);/*函数类型简写*/
+  jobject activityObj;
+  if (isHave)
+  &#123;
+      //CallStaticObjectMethod调用java函数，并把返回值赋值给activityObj
+      activityObj = minfo.env-&gt;CallStaticObjectMethod(minfo.classID, minfo.methodID);
+  &#125;</code></pre>
+<p>OK，很简单。上面的代码，就是使用JNI在C++中调用java类静态函数的典型使用方法。只有两步：</p>
+<ul>
+<li><ol>
+<li>获取java函数的信息，classid、methodid等等</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>选择JNIEnv中的接口，进行函数调用</li>
+</ol>
+</li>
+</ul>
+<h1 id="getStaticMethodInfo参数详解"><a href="#getStaticMethodInfo参数详解" class="headerlink" title="getStaticMethodInfo参数详解"></a>getStaticMethodInfo参数详解</h1><p>两个接口的参数一样，意义也相同，详解如下：</p>
+<ol>
+<li>JniMethodInfo &amp;methodinfo JniMethodInfo对象的引用，函数执行中会把jniEvn、classid、methodid写入到引用中。</li>
+<li>const char *className 类的路径，把类的完整包名写全，用法如以上代码。</li>
+<li>const char *methodName 函数名，函数名写上就行了。</li>
+</ol>
+<p>*<em>const char <em>paramCode 函数类型简写</em></em></p>
+<p>这个参数需要单独介绍，它的格式为：(参数)返回类型。<br>例如：无参数，void返回类型函数，其简写为 ()V  </p>
+<h2 id="java中的类型对应的简写如下："><a href="#java中的类型对应的简写如下：" class="headerlink" title="java中的类型对应的简写如下："></a>java中的类型对应的简写如下：</h2><p>参数类型 -&gt; 参数简写</p>
+<pre><code>boolean -&gt; Z
+
+byte -&gt; B
+
+char -&gt; C
+
+short -&gt; S
+
+int -&gt; I
+
+long -&gt; J
+
+float -&gt; F
+
+double -&gt; D
+
+void -&gt; V
+
+Object -&gt; Ljava/lang/String; L用/分割类的完整路径
+
+Array -&gt; [Ljava/lang/String; [签名 [I</code></pre>
+<h3 id="多参数的函数"><a href="#多参数的函数" class="headerlink" title="多参数的函数"></a>多参数的函数</h3><p>如果函数有多个参数，直接把简写并列即可。注意Object与Array型参数简写结尾的分号，示例：</p>
+<pre><code>IIII //4个int型参数的函数
+ILjava/lang/String;I //整形，string类型，整形组合 (int x, String a, int y)</code></pre>
+<h1 id="通过JNIEnv进行函数调用"><a href="#通过JNIEnv进行函数调用" class="headerlink" title="通过JNIEnv进行函数调用"></a>通过JNIEnv进行函数调用</h1><p>JNIEvn有一系列的CallStatic[返回类型]Method、Call[返回类型]Method接口，需要针对不同的函数返回类型选择调用。</p>
+<p>[返回类型]以函数返回类型的不同，对应不同的函数名。</p>
+<p>例如：</p>
+<pre><code>CallStaticVoidMethod ---------void
+CallVoidMethod ---------void</code></pre>
+<p>其对应关系如下：</p>
+<p>函数名 -&gt; 函数返回值类型</p>
+<pre><code>Void -&gt; void
+
+Object -&gt; jobject
+
+Boolean -&gt; jboolean
+
+Byte -&gt; jbyte
+
+Char -&gt; jchar
+
+Short -&gt; jshort
+
+Int -&gt; jint
+
+Long -&gt; jlong
+
+Float -&gt; jfloat
+
+Double -&gt; jdouble</code></pre>
+<h2 id="参数传递"><a href="#参数传递" class="headerlink" title="参数传递"></a>参数传递</h2><p>调用有参数的java函数时，需要把对应的参数传递进去。需要把参数按顺序加入到classid、methodid后面，并且需要做类型转换。例如：</p>
+<pre><code>jint jX = 10;
+jint jY = 10;
+minfo.env-&gt;CallStaticVoidMethod(minfo.classID, minfo.methodID, jX, jY);</code></pre>
+<p>参数类型转换关系如下：</p>
+<pre><code>C++类型  -&gt; java类型
+
+boolean -&gt; jboolean
+
+byte -&gt; jbyte
+
+char -&gt; jchar
+
+short -&gt; jshort
+
+int -&gt; jint
+
+long -&gt; jlong
+
+float -&gt; jfloat
+
+double -&gt; jdouble
+
+Object -&gt; jobject
+
+Class -&gt; jclass
+
+String -&gt; jstring
+
+Object[] -&gt; jobjectArray
+
+boolean[] -&gt; jbooleanArray
+
+byte[] -&gt; jbyteArray
+
+char[] -&gt; jcharArray
+
+short[] -&gt; jshortArray
+
+int[] -&gt; jintArray
+
+long[] -&gt; jlongArray
+
+float[] -&gt; jfloatArray
+
+double[] -&gt; jdoubleArray</code></pre>
+<h2 id="string类型的转换"><a href="#string类型的转换" class="headerlink" title="string类型的转换"></a>string类型的转换</h2><p>实际上我们最常用的参数类型，主要是内建的数据类型、string字符串类型。数据类型可以直接转为j类型，但是string类型需要做如下处理：</p>
+<pre><code>jstring jmsg = minfo.env-&gt;NewStringUTF(&quot;http://www.baidu.com&quot;);
+minfo.env-&gt;CallStaticVoidMethod(minfo.classID, minfo.methodID, jmsg);</code></pre>
+<h1 id="非静态函数的调用"><a href="#非静态函数的调用" class="headerlink" title="非静态函数的调用"></a>非静态函数的调用</h1><p>非静态函数的调用与静态函数的调用类型，但是需要通过一个静态函数获取java类对象。<br>示例：</p>
+<pre><code>//C++代码
+//1. 获取activity静态对象
+JniMethodInfo minfo;
+bool isHave = JniHelper::getStaticMethodInfo(minfo,
+                                             &quot;com/omega/MyApp&quot;,
+                                             &quot;getJavaActivity&quot;,
+                                             &quot;()Ljava/lang/Object;&quot;);
+jobject activityObj;
+if (isHave)
+&#123;
+    //调用静态函数getJavaActivity，获取java类对象。
+    activityObj = minfo.env-&gt;CallStaticObjectMethod(minfo.classID, minfo.methodID);
+&#125;
+
+//2. 查找displayWebView接口，获取其函数信息，并用jobj调用
+isHave = JniHelper::getMethodInfo(minfo,&quot;com/omega/MyApp&quot;,&quot;displayWebView&quot;, &quot;(IIII)V&quot;);
+
+if (!isHave)
+&#123;
+    CCLog(&quot;jni:displayWebView 函数不存在&quot;);
+&#125;
+else
+&#123;
+    //调用此函数
+    jint jX = (int)tlX;
+    jint jY = (int)tlY;
+    jint jWidth = (int)webWidth;
+    jint jHeight = (int)webHeight;
+    //调用displayWebView函数，并传入参数
+    minfo.env-&gt;CallVoidMethod(activityObj, minfo.methodID, jX, jY, jWidth, jHeight);
+&#125;</code></pre>
+<h1 id="详尽的示例代码"><a href="#详尽的示例代码" class="headerlink" title="详尽的示例代码"></a>详尽的示例代码</h1><p>最后，放一块比较详细的JNI使用代码，基本上覆盖了的全部使用情况。</p>
+<pre><code>    JniMethodInfo minfo;//JniHelper   
+
+    /* 测试用方法 */
+    /*bool isHave = JniHelper::getStaticMethodInfo(minfo,&quot;com/cocoa/HiWorld&quot;,&quot;loginGree&quot;, &quot;()V&quot;); //
+     if (isHave) &#123;
+     //CCLog(&quot;有showText &quot;);
+     minfo.env -&gt; CallStaticVoidMethod(minfo.classID,minfo.methodID);
+     &#125;else
+     &#123;
+     //CCLog(&quot;没有方法showText&quot;);
+     &#125;*/
+
+    /* 分享 */
+    /*//将c++中的string转换成java中的string
+     //char str[] = &quot;test&quot;;
+     bool isHave = JniHelper::getStaticMethodInfo(minfo,&quot;com/cocoa/HiWorld&quot;,&quot;shareSina&quot;, &quot;(Ljava/lang/String;Ljava/lang/String;)V&quot;); //
+     if (isHave) &#123;
+     //CCLog(&quot;有share &quot;);
+     jstring jstr = minfo.env-&gt;NewStringUTF(&quot;test1 share&quot;);
+     jstring jst = minfo.env-&gt;NewStringUTF(&quot;/data/data/com.cocoa/cy.png&quot;);
+     //jstring jst = minfo.env-&gt;NewStringUTF(&quot;&quot;);
+     minfo.env -&gt; CallStaticVoidMethod(minfo.classID,minfo.methodID,jstr,jst);
+     &#125;else
+     &#123;
+     //CCLog(&quot;没有方法share&quot;);
+     &#125;*/
+    /* 设置高分 */
+    /*jint ind = 0;
+     jlong lsre = 2202l;
+     bool isHave = JniHelper::getStaticMethodInfo(minfo,&quot;com/cocoa/HiWorld&quot;,&quot;setHighScore&quot;, &quot;(IJ)V&quot;);
+     if (isHave) &#123;
+     minfo.env -&gt; CallStaticVoidMethod(minfo.classID,minfo.methodID,ind,lsre);            
+     &#125;*/
+    /* 成就解锁 */
+    /*jint aind = 0;
+     bool isHave = JniHelper::getStaticMethodInfo(minfo,&quot;com/cocoa/HiWorld&quot;,&quot;unLock&quot;, &quot;(I)V&quot;);
+     if (isHave) &#123;
+     minfo.env -&gt; CallStaticVoidMethod(minfo.classID,minfo.methodID,aind);            
+     &#125;*/
+    /* 测试用方法 */
+    bool isHave = JniHelper::getStaticMethodInfo(minfo,&quot;com/cocoa/HiWorld&quot;,&quot;rtnActivity&quot;,&quot;()Ljava/lang/Object;&quot;);
+    jobject jobj;
+    if (isHave) &#123;
+        jobj = minfo.env-&gt;CallStaticObjectMethod(minfo.classID, minfo.methodID);
+    &#125;       
+    //CCLog(&quot; jobj存在&quot;);
+    /* 测试用方法,非静态无参数无返回值方法 */
+    /*isHave = JniHelper::getMethodInfo(minfo,&quot;com/cocoa/HiWorld&quot;,&quot;showText&quot;, &quot;()V&quot;);
+     if (isHave) &#123;
+     minfo.env -&gt; CallVoidMethod(jobj,minfo.methodID);
+     &#125;*/
+    /* 测试用方法,非静态有java类型的String参数无返回值方法 */
+    /*isHave = JniHelper::getMethodInfo(minfo,&quot;com/cocoa/HiWorld&quot;,&quot;showText&quot;, &quot;(Ljava/lang/String;)V&quot;);
+     if (isHave) &#123;
+     jstring jmsg = minfo.env-&gt;NewStringUTF(&quot;msg okey!&quot;);
+     minfo.env -&gt; CallVoidMethod(jobj,minfo.methodID,jmsg);
+     &#125;*/
+    /* 测试用方法，返回java类型的String，有java类型的String和int参数方法 */
+    /*isHave = JniHelper::getMethodInfo(minfo,&quot;com/cocoa/HiWorld&quot;,&quot;showText&quot;, &quot;(Ljava/lang/String;I)Ljava/lang/String;&quot;);
+     if (isHave) &#123;
+     jstring jmsg = minfo.env-&gt;NewStringUTF(&quot;msg okey! return string&quot;);
+     jint index = 0;
+     minfo.env -&gt; CallObjectMethod(jobj,minfo.methodID,jmsg,index);
+     &#125;*/
+    /* 测试用方法，返回java类型的String[]，有java类型的String[]和int参数方法 */
+    /*isHave = JniHelper::getMethodInfo(minfo,&quot;com/cocoa/HiWorld&quot;,&quot;showText&quot;, &quot;([Ljava/lang/String;I)[Ljava/lang/String;&quot;);
+     if (isHave) &#123;
+     jobjectArray args = 0;
+     jstring str;
+     jsize len = 5;
+     const char* sa[] = &#123;&quot;Hi,&quot;,&quot;World!&quot;,&quot;JNI &quot;,&quot;is &quot;,&quot;fun&quot;&#125;;
+     int i = 0;
+     args = minfo.env-&gt;NewObjectArray(len,minfo.env-&gt;FindClass(&quot;java/lang/String&quot;),0);
+     for(i=0;iNewStringUTF(sa[i]);
+     minfo.env-&gt;SetObjectArrayElement(args,i,str);
+     &#125;
+     //minfo.env-&gt;GetStringArrayRegion(args,0,10,buf);
+     //jintArray jmsg = &#123;1,2,3&#125;;
+     //minfo.env-&gt;NewStringUTF(&quot;msg okey! return string&quot;);
+     jint index = 0;
+     minfo.env -&gt; CallObjectMethod(jobj,minfo.methodID,args,index);
+     &#125;*/
+    /* 测试用方法，无返回类型，有java类型的int[]和int参数方法 */
+    /*isHave = JniHelper::getMethodInfo(minfo,&quot;com/cocoa/HiWorld&quot;,&quot;testArr&quot;, &quot;([II)V&quot;);
+     if (isHave) &#123;
+     jint buf[]=&#123;7,5,8,9,3&#125;;
+     jintArray jintArr; //定义jint数组
+     jintArr = minfo.env-&gt;NewIntArray(5);
+     minfo.env-&gt;SetIntArrayRegion(jintArr,0,5,buf);
+     jint index = 0;
+     minfo.env -&gt; CallVoidMethod(jobj,minfo.methodID,jintArr,index);
+     &#125;*/
+    /* 测试用方法，无返回类型，有java类型的byte[]和int参数方法 */
+    isHave = JniHelper::getMethodInfo(minfo,&quot;com/cocoa/HiWorld&quot;,&quot;testArr&quot;, &quot;([BI)V&quot;);
+    if (isHave) &#123;
+        jbyte buf[]=&#123;7,5,8,9,3&#125;;
+        jbyteArray jbyteArr; //定义jbyte数组
+        jbyteArr = minfo.env-&gt;NewByteArray(5);
+        minfo.env-&gt;SetByteArrayRegion(jbyteArr,0,5,buf);
+        jint index = 0;
+        minfo.env -&gt; CallVoidMethod(jobj,minfo.methodID,jbyteArr,index);
+    &#125;
+
+
+
+
+private static HiWorld hiWorld = null;
+protected void onCreate(Bundle savedInstanceState) &#123;
+    super.onCreate(savedInstanceState);
+    hiWorld = this;
+    if (detectOpenGLES20()) &#123;
+        // get the packageName,it&#39;s used to set the resource path
+        String packageName = getApplication().getPackageName();
+        super.setPackageName(packageName);
+        // set content
+        setContentView(R.layout.game_demo);
+        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
+                                  R.layout.window_title);
+
+        mGLView = (Cocos2dxGLSurfaceView) findViewById(R.id.game_gl_surfaceview);
+        mGLView.setTextField((Cocos2dxEditText) findViewById(R.id.textField));
+        mGLView.setEGLContextClientVersion(2);
+        mGLView.setCocos2dxRenderer(new Cocos2dxRenderer());
+        task = new TimerTask() &#123;
+            @Override
+            public void run() &#123;
+                // HiWorld.shoot(hiWorld);
+                Log.e(&quot;-------------------&quot;, &quot;-------------------&quot;);
+                // 调用c++中的方法
+                System.out.println(&quot;------------------------&quot;
+                                   + stringZjy1());
+            &#125;
+        &#125;;
+        timer = new Timer();
+        timer.schedule(task, 5000);
+    &#125; else &#123;
+        Log.d(&quot;activity&quot;, &quot;don&#39;t support gles2.0&quot;);
+        finish();
+    &#125;
+
+    static &#123;
+        System.loadLibrary(&quot;game&quot;);
+    &#125;
+
+    // c++中調用的方法
+    public static Object rtnActivity() &#123;
+        System.out.println(&quot;----------rtnActivity&quot;);
+        return hiWorld;
+    &#125;
+
+    // c++中調用的方法,传String类型
+    public void showText(final String msg) &#123;
+        // 添加到主线程
+        hiWorld.runOnUiThread(new Runnable() &#123;
+            public void run() &#123;
+                System.out.println(&quot;----------msg:&quot;+msg);
+            &#125;
+        &#125;);
+    &#125;
+    //c++中調用的方法,传String类型和int类型
+    public String showText(final String msg,final int index) &#123;
+        // 添加到主线程
+        hiWorld.runOnUiThread(new Runnable() &#123;
+            public void run() &#123;
+                System.out.println(&quot;----------msg:&quot;+msg+&quot;; index=&quot;+index);
+            &#125;
+        &#125;);
+        return &quot;okey String showText(final String msg,final int index)&quot;;
+    &#125;
+    //c++中調用的方法,传String[]类型和int类型
+    public String[] showText(final String[] msg,final int index) &#123;
+        String[] strArr = &#123;&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;5&quot;&#125;;
+        // 添加到主线程
+        hiWorld.runOnUiThread(new Runnable() &#123;
+            public void run() &#123;
+                for(String _str:msg)&#123;
+                    System.out.println(&quot;----------String[] msg:&quot;+_str+&quot;; index=&quot;+index);
+                &#125;
+            &#125;
+        &#125;);
+        return strArr;
+    &#125;
+    //c++中調用的方法,传int[]类型和int类型
+    public void testArr(final int msg[],final int index) &#123;
+        // 添加到主线程
+        hiWorld.runOnUiThread(new Runnable() &#123;
+            public void run() &#123;
+                System.out.println(&quot;----------int[] msg len：&quot;+msg.length);
+                for(int _bl:msg)&#123;
+                    System.out.println(&quot;----------int[] msg:&quot;+_bl+&quot;; index=&quot;+index);
+                &#125;
+            &#125;
+        &#125;);
+    &#125;
+    //c++中調用的方法,传int[]类型和int类型
+    public void testArr(final byte msg[],final int index) &#123;
+        // 添加到主线程
+        hiWorld.runOnUiThread(new Runnable() &#123;
+            public void run() &#123;
+                System.out.println(&quot;----------byte[] msg len：&quot;+msg.length);
+                for(int _bl:msg)&#123;
+                    System.out.println(&quot;----------byte[] msg:&quot;+_bl+&quot;; index=&quot;+index);
+                &#125;
+            &#125;
+        &#125;);
+    &#125;</code></pre>
+<p>参考文章：<br><a target="_blank" rel="noopener" href="http://www.himigame.com/android-game/725.html">Himi教程</a><br><a target="_blank" rel="noopener" href="http://blog.csdn.net/kafei_kings/article/details/8106744">CSDN博客</a></p>
+
+                </section>
+
+                
+                
+                
+
+            </article>
+
+            
+            <nav class="dis_flex al_post_nav">
+                <a class="al_post_nav_item dis_flex_acenter" href="/2012/12/11/2012-12-11-work-hard-to-make-my-dreak-come-true/">
+                    
+                        <svg class="al_arrow">
+                            <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-arrow-left"></use>
+                        </svg>
+                        <span class="al_text_ellipsis al_post_nav_desc">Work hard to make my dream come true.</span>
+                    
+                </a>
+                <a class="al_post_nav_item dis_flex_acenter" href="/2012/12/07/2012-12-07-workon/">
+                    
+                        <span class="al_text_ellipsis al_post_nav_desc">继续寻路</span>
+                        <svg class="al_arrow">
+                            <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-arrow-right"></use>
+                        </svg>
+                    
+                </a>
+            </nav>
+        </div>
+    </div>
+
+
+        <div class="al_index_footer dis_flex_center">
+    <div class="al_index_footer_item al_index_footer_title">
+        John Doe
+    </div>
+
+    
+    
+
+    <div class="al_index_footer_item al_index_footer_extra">
+        Created By 
+        <a target="_blank" rel="noopener" href="https://github.com/iGuan7u/Acetolog">AcetoLog</a>
+         · Power By 
+        <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>
+    </div>
+
+    <div class="al_index_footer_item al_index_footer_extra_right">
+        All Right Reserved
+    </div>
+</div>
+
+        <script type="text/javascript" async="async" src="/javascripts/acelog.js"></script>
+        
+        
+        
+        
+    </body>
+</html>
+        

@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>git-svn usage</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2.0">
+<link rel="stylesheet", href="/./css/style.css">
+<link rel="shortcut icon", href="/./favicon.ico">
+<link rel="apple-touch-icon", href="/./apple-touch-icon.png">
+
+        
+    
+    <link rel='stylesheet' href="/./css/dracula.css">
+
+    <meta name="generator" content="Hexo 5.2.0"></head>
+    <body>
+        <header class="al_header al_pos_fixed">
+    <div class="al_header_container dis_flex_jcenter">
+        <div class="al_header_container_left">
+            <div class="al_header_site_title">
+                <a href="/">Hexo</a>
+            </div>
+        </div>
+
+        <div class="dis_flex_jcenter">
+            <div class="al_header_setting">
+                <svg class="al_header_icon">
+                    <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-menu"></use>
+                </svg>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="al_sidebar">
+
+    <div class="al_sidebar_overlay al_full_cover"></div>
+
+    <div class="al_pos_fixed al_sidebar_cnt">
+        <div class="dis_flex_acenter al_sidebar_header">
+            <h3>Hexo</h3>
+            <div class="al_sidebar_close al_header_setting">
+                <svg class="al_header_icon">
+                    <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-close"></use>
+                </svg>
+            </div>
+        </div>
+
+        <div class="al_sidebar_author_cnt">
+
+            <div class="al_sidebar_author_info">
+                <h4>John Doe</h4>
+                <img class="al_sidebar_avatar" src="https://yourAvatorURL">
+                <p></p>
+            </div>
+
+            
+        </div>
+    </div>
+</div>
+
+        
+    <div class="dis_flex_center al_lightbox_cnt al_full_cover">
+        <img class="al_lightbox_img"/>
+    </div>
+    <div class="al_page_background dis_flex_center al_full_cover"></div>
+    <div class="al_page_container">
+        <div class="al_pos_ab al_fake_background"></div>
+        <div class="al_main_container al_shadow al_main_page_container">
+            <article class="al_article">
+                <header>
+                    <h1 class="al_page_title">
+                        git-svn usage
+                    </h1>
+                    <div class="al_page_info dis_flex">
+                        <div class="al_page_content_info">
+                            January 18, 2018 09:01 AM
+                        </div>
+
+                        
+
+                        
+                        <span class="tags"></span>
+                    </div>
+                </header>
+
+                
+                    <div class="al_page_content_outline">
+                        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E6%B3%95"><span class="toc-text">用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
+                    </div>
+                
+
+                
+                <section id="post-body">
+                    <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>由于各种原因，项目一直使用svn作为版本控制工具。最近svn关于分支管理的弊端终于是大爆发了，svn的分支合并真的太挫了，首先你必须checkout每个分支的拷贝才能进行merge，对于几G的工程你根本无法通过创建多个分支的方式进行项目管理，创建bug分支、feature分支等多个分支合并的操作根本不现实。另外，分支合并操作是无法保留提交记录的，这导致根本无法对合并后的分支做代码review，你很难区分自己的提交是不是被合理的合并了，相当的费时费力。现在木已成舟，改用git是不现实的，左思右想发现git-svn也能凑合用一用。</p>
+<h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><pre><code># Clone a repo (like git clone):
+git svn clone http://svn.example.com/project/trunk
+# Enter the newly cloned directory:
+cd trunk
+# You should be on master branch, double-check with &#39;git branch&#39;
+git branch
+# Do some work and commit locally to Git:
+git commit ...
+# Something is committed to SVN, rebase your local changes against the
+# latest changes in SVN:
+git svn rebase
+# Now commit your changes (that were committed previously using Git) to SVN,
+# as well as automatically updating your working HEAD:
+git svn dcommit
+# Append svn:ignore settings to the default Git exclude file:
+git svn show-ignore &gt;&gt; .git/info/exclude</code></pre>
+<p>看起来非常简单，除了下面几个操作，其余都用git操作即可。</p>
+<ol>
+<li><code>git svn clone</code> 初始化工程</li>
+<li><code>git svn dcommit</code> 本地修改同步到svn的</li>
+<li><code>git svn rebase</code> 同步svn的最新修改</li>
+</ol>
+<p>并且<code>git svn dcommit</code>操作会把git中每个commit生成对应的svn commit，那么对于那些不方便同步到工程的feature分支，完全可以在本地通过git保持维护，等到feature的上线时间点再merge到本地的master即可。</p>
+<p>最好不要使用<code>git merge</code>进行分支合并，当<code>dcommit</code>与svn服务器同步的时候git历史会造成大规模的重写，使用<code>git rebase</code>操作可以保持git历史的线性一致。</p>
+<p>另外，<code>git svn clone</code>操作可能会非常慢，这可能是个比较痛苦的过程。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://git-scm.com/docs/git-svn">1. https://git-scm.com/docs/git-svn</a></p>
+
+                </section>
+
+                
+                
+                
+
+            </article>
+
+            
+            <nav class="dis_flex al_post_nav">
+                <a class="al_post_nav_item dis_flex_acenter" href="/2018/03/02/unity-optimize-particle-dynamic-batching/">
+                    
+                        <svg class="al_arrow">
+                            <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-arrow-left"></use>
+                        </svg>
+                        <span class="al_text_ellipsis al_post_nav_desc">Unity优化：特效动态dynamic batching思路</span>
+                    
+                </a>
+                <a class="al_post_nav_item dis_flex_acenter" href="/2018/01/18/git-rebase-toturial/">
+                    
+                        <span class="al_text_ellipsis al_post_nav_desc">What is git rebase</span>
+                        <svg class="al_arrow">
+                            <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-arrow-right"></use>
+                        </svg>
+                    
+                </a>
+            </nav>
+        </div>
+    </div>
+
+
+        <div class="al_index_footer dis_flex_center">
+    <div class="al_index_footer_item al_index_footer_title">
+        John Doe
+    </div>
+
+    
+    
+
+    <div class="al_index_footer_item al_index_footer_extra">
+        Created By 
+        <a target="_blank" rel="noopener" href="https://github.com/iGuan7u/Acetolog">AcetoLog</a>
+         · Power By 
+        <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>
+    </div>
+
+    <div class="al_index_footer_item al_index_footer_extra_right">
+        All Right Reserved
+    </div>
+</div>
+
+        <script type="text/javascript" async="async" src="/javascripts/acelog.js"></script>
+        
+        
+        
+        
+    </body>
+</html>
+        

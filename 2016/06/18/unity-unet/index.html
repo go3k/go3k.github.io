@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Unity UNet用法</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2.0">
+<link rel="stylesheet", href="/./css/style.css">
+<link rel="shortcut icon", href="/./favicon.ico">
+<link rel="apple-touch-icon", href="/./apple-touch-icon.png">
+
+        
+    
+    <link rel='stylesheet' href="/./css/dracula.css">
+
+    <meta name="generator" content="Hexo 5.2.0"></head>
+    <body>
+        <header class="al_header al_pos_fixed">
+    <div class="al_header_container dis_flex_jcenter">
+        <div class="al_header_container_left">
+            <div class="al_header_site_title">
+                <a href="/">Hexo</a>
+            </div>
+        </div>
+
+        <div class="dis_flex_jcenter">
+            <div class="al_header_setting">
+                <svg class="al_header_icon">
+                    <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-menu"></use>
+                </svg>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="al_sidebar">
+
+    <div class="al_sidebar_overlay al_full_cover"></div>
+
+    <div class="al_pos_fixed al_sidebar_cnt">
+        <div class="dis_flex_acenter al_sidebar_header">
+            <h3>Hexo</h3>
+            <div class="al_sidebar_close al_header_setting">
+                <svg class="al_header_icon">
+                    <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-close"></use>
+                </svg>
+            </div>
+        </div>
+
+        <div class="al_sidebar_author_cnt">
+
+            <div class="al_sidebar_author_info">
+                <h4>John Doe</h4>
+                <img class="al_sidebar_avatar" src="https://yourAvatorURL">
+                <p></p>
+            </div>
+
+            
+        </div>
+    </div>
+</div>
+
+        
+    <div class="dis_flex_center al_lightbox_cnt al_full_cover">
+        <img class="al_lightbox_img"/>
+    </div>
+    <div class="al_page_background dis_flex_center al_full_cover"></div>
+    <div class="al_page_container">
+        <div class="al_pos_ab al_fake_background"></div>
+        <div class="al_main_container al_shadow al_main_page_container">
+            <article class="al_article">
+                <header>
+                    <h1 class="al_page_title">
+                        Unity UNet用法
+                    </h1>
+                    <div class="al_page_info dis_flex">
+                        <div class="al_page_content_info">
+                            June 18, 2016 06:06 AM
+                        </div>
+
+                        
+
+                        
+                        <span class="tags"></span>
+                    </div>
+                </header>
+
+                
+                    <div class="al_page_content_outline">
+                        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Unity-UNet%E7%94%A8%E6%B3%95"><span class="toc-text">Unity UNet用法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5%E5%92%8C%E8%AE%BE%E5%AE%9A"><span class="toc-text">概念和设定</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#NetworkBehaviour"><span class="toc-text">NetworkBehaviour</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#player"><span class="toc-text">player</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F"><span class="toc-text">网络通信方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%80%9D%E8%B7%AF"><span class="toc-text">使用思路</span></a></li></ol></li></ol>
+                    </div>
+                
+
+                
+                <section id="post-body">
+                    <h1 id="Unity-UNet用法"><a href="#Unity-UNet用法" class="headerlink" title="Unity UNet用法"></a>Unity UNet用法</h1><p>UNet是Unity设计的网络多人游戏模块，特点是与Unity高度集成，使用非常方便，可以快速制作多人游戏原型。根据使用需求来分提供两种功能：</p>
+<ul>
+<li>High Level API：简单快速，完全可以实现多人游戏</li>
+<li>NetworkTransport API：使用底层传输模块自行封装</li>
+</ul>
+<p>本文主要介绍一下HLAPI的用法和编程模型，理解了这个模块的设定之后，使用这个模块会非常得心应手。</p>
+<blockquote>
+<p>详细的功能介绍: <a target="_blank" rel="noopener" href="http://docs.unity3d.com/Manual/UNetOverview.html">UNetOverview</a></p>
+<p>使用HAPI从头制作多人游戏：<a target="_blank" rel="noopener" href="http://docs.unity3d.com/Manual/UNetSetup.html">Setting up a Multiplayer Project from Scratch</a></p>
+</blockquote>
+<p>最吸引我的功能是支持局域网联机，这个功能想很久了。</p>
+<h2 id="概念和设定"><a href="#概念和设定" class="headerlink" title="概念和设定"></a>概念和设定</h2><p>UNet支持局域网联机，实现方式是有一个客户端同时做服务器，但是从概念上我们仍然需要用客户端、服务器通信模式来理解。</p>
+<p><img src="http://docs.unity3d.com/uploads/Main/NetworkLocalPlayers.png" alt="server client structure"></p>
+<h3 id="NetworkBehaviour"><a href="#NetworkBehaviour" class="headerlink" title="NetworkBehaviour"></a>NetworkBehaviour</h3><p>可以理解为有网络行为的MonoBehaviour，创建NetworkBehaviour的GameObject后，必须进行Spawn操作。并且，这个操作只能在Server端进行，操作完成后，UNet会为每个客户端生成客户端实例。</p>
+<h3 id="player"><a href="#player" class="headerlink" title="player"></a>player</h3><p>每个客户端都有一个Player，可以在NetWorkManager指定prefab为player。两个玩家联机游戏的情况如上图所示，Server端和客户端都有同样多的Player，并且他们之间的状态应该是完全同步的。客户端中有一个Player是localPlayer，可以理解为是玩家可操作的player，通过这个Player可以进行与服务器之间的通信。</p>
+<h3 id="网络通信方式"><a href="#网络通信方式" class="headerlink" title="网络通信方式"></a>网络通信方式</h3><p>最常用的通信就是Commond和Rpc</p>
+<p><img src="http://docs.unity3d.com/uploads/Main/UNetDirections.jpg" alt="Remote Actions"></p>
+<ul>
+<li>Commond</li>
+</ul>
+<p>NetworkBehaviour可以通过Commond通信给Server，简单理解就是程序执行权跳转到Server，Server有绝对控制权，进行客户端不能进行的操作。使用方式为：</p>
+<pre><code>[Command]
+void CmdDoFire(float lifeTime)
+&#123;
+  ...
+&#125;</code></pre>
+<ul>
+<li>ClientRpc</li>
+</ul>
+<p>Server调用Client，只能在Server执行，所有Client中的NetworkBehaviour都会受到调用。</p>
+<ul>
+<li>网络通信的参数有一些限制如下：</li>
+</ul>
+<p>The arguments passed to commands and ClientRpc calls are serialized and sent over the network. These arguments can be:</p>
+<ol>
+<li>basic types (byte, int, float, string, UInt64, etc)</li>
+<li>arrays of basic types</li>
+<li>structs containing allowable types</li>
+<li>built-in unity math types (Vector3, Quaternion, etc)</li>
+<li>NetworkIdentity</li>
+<li>NetworkInstanceId</li>
+<li>NetworkHash128</li>
+<li>GameObject with a NetworkIdentity component attached</li>
+</ol>
+<h2 id="使用思路"><a href="#使用思路" class="headerlink" title="使用思路"></a>使用思路</h2><p>理解了这些概念和设计就完全可以使用HLAPI制作多人游戏了，以我制作的游戏为例说明一下我的实现思路。</p>
+<p>首先，是一个格斗游戏，要求是服务器验证并执行所有用户指令，并转发指令结果给客户端。那么，客户端只负责输入指令、播放动作(攻击、被打)，服务器执行战斗核心代码，例如：解析指令为技能、通知客户端释放技能、通知客户端状态(攻击、被打)。</p>
+<ol>
+<li>BattleEngine，只在服务器执行。PlayerManager持有所有Player</li>
+<li>客户端接收指令，通过Cmd发送到服务器，在服务器上：BattleEngine接收指令，计算处理结果后通过PlayerManager对所有Player调用rpc方法(Server有最高控制权)，这样所有的客户端的所有player都能得到调用并更新显示。</li>
+<li>就这么简单，没了。需要注意的是，UNet把客户端和服务器同等对待，你编写的一个NetworkBehaviour既在客户端执行，也在服务器执行，非常容易搞混。建议通过方法名或者注释，来标记关键函数的调用点是客户端还是服务器。理清楚这个思路，编码就很轻松了。</li>
+</ol>
+
+                </section>
+
+                
+                
+                
+
+            </article>
+
+            
+            <nav class="dis_flex al_post_nav">
+                <a class="al_post_nav_item dis_flex_acenter" href="/2017/06/26/Gamerathon-in-CamelGames/">
+                    
+                        <svg class="al_arrow">
+                            <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-arrow-left"></use>
+                        </svg>
+                        <span class="al_text_ellipsis al_post_nav_desc">一次30小时的奇幻旅程</span>
+                    
+                </a>
+                <a class="al_post_nav_item dis_flex_acenter" href="/2016/06/17/gongbenwuzang/">
+                    
+                        <span class="al_text_ellipsis al_post_nav_desc">宫本武藏 剑与禅</span>
+                        <svg class="al_arrow">
+                            <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-arrow-right"></use>
+                        </svg>
+                    
+                </a>
+            </nav>
+        </div>
+    </div>
+
+
+        <div class="al_index_footer dis_flex_center">
+    <div class="al_index_footer_item al_index_footer_title">
+        John Doe
+    </div>
+
+    
+    
+
+    <div class="al_index_footer_item al_index_footer_extra">
+        Created By 
+        <a target="_blank" rel="noopener" href="https://github.com/iGuan7u/Acetolog">AcetoLog</a>
+         · Power By 
+        <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>
+    </div>
+
+    <div class="al_index_footer_item al_index_footer_extra_right">
+        All Right Reserved
+    </div>
+</div>
+
+        <script type="text/javascript" async="async" src="/javascripts/acelog.js"></script>
+        
+        
+        
+        
+    </body>
+</html>
+        

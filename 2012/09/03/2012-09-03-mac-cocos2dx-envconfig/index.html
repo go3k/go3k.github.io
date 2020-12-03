@@ -1,0 +1,216 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Mac下Cocos2d-x Android开发环境配置</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2.0">
+<link rel="stylesheet", href="/./css/style.css">
+<link rel="shortcut icon", href="/./favicon.ico">
+<link rel="apple-touch-icon", href="/./apple-touch-icon.png">
+
+        
+    
+    <link rel='stylesheet' href="/./css/dracula.css">
+
+    <meta name="generator" content="Hexo 5.2.0"></head>
+    <body>
+        <header class="al_header al_pos_fixed">
+    <div class="al_header_container dis_flex_jcenter">
+        <div class="al_header_container_left">
+            <div class="al_header_site_title">
+                <a href="/">Hexo</a>
+            </div>
+        </div>
+
+        <div class="dis_flex_jcenter">
+            <div class="al_header_setting">
+                <svg class="al_header_icon">
+                    <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-menu"></use>
+                </svg>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="al_sidebar">
+
+    <div class="al_sidebar_overlay al_full_cover"></div>
+
+    <div class="al_pos_fixed al_sidebar_cnt">
+        <div class="dis_flex_acenter al_sidebar_header">
+            <h3>Hexo</h3>
+            <div class="al_sidebar_close al_header_setting">
+                <svg class="al_header_icon">
+                    <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-close"></use>
+                </svg>
+            </div>
+        </div>
+
+        <div class="al_sidebar_author_cnt">
+
+            <div class="al_sidebar_author_info">
+                <h4>John Doe</h4>
+                <img class="al_sidebar_avatar" src="https://yourAvatorURL">
+                <p></p>
+            </div>
+
+            
+        </div>
+    </div>
+</div>
+
+        
+    <div class="dis_flex_center al_lightbox_cnt al_full_cover">
+        <img class="al_lightbox_img"/>
+    </div>
+    <div class="al_page_background dis_flex_center al_full_cover"></div>
+    <div class="al_page_container">
+        <div class="al_pos_ab al_fake_background"></div>
+        <div class="al_main_container al_shadow al_main_page_container">
+            <article class="al_article">
+                <header>
+                    <h1 class="al_page_title">
+                        Mac下Cocos2d-x Android开发环境配置
+                    </h1>
+                    <div class="al_page_info dis_flex">
+                        <div class="al_page_content_info">
+                            September 03, 2012 05:09 AM
+                        </div>
+
+                        
+
+                        
+                        <span class="tags"></span>
+                    </div>
+                </header>
+
+                
+                    <div class="al_page_content_outline">
+                        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%84%E6%BA%90%E5%87%86%E5%A4%87"><span class="toc-text">资源准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BE%9D%E6%AC%A1"><span class="toc-text">依次</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E5%AE%8C%E6%88%90"><span class="toc-text">环境安装配置完成</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91cocos2d-x%E5%B7%A5%E7%A8%8B"><span class="toc-text">编译cocos2d-x工程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%92%8C%E8%B0%83%E8%AF%95"><span class="toc-text">创建和调试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Android%E8%B0%83%E8%AF%95"><span class="toc-text">Android调试</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%96%B0%E7%9A%84Android%E5%B7%A5%E7%A8%8B"><span class="toc-text">创建新的Android工程</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS%E3%80%81Android%E8%B7%A8%E5%B9%B3%E5%8F%B0%EF%BC%8C%E5%85%B1%E7%94%A8Classes%E3%80%81Resources%E5%B7%A5%E7%A8%8B%E9%85%8D%E7%BD%AE"><span class="toc-text">iOS、Android跨平台，共用Classes、Resources工程配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%A0%E4%B8%AA%E9%97%AE%E9%A2%98"><span class="toc-text">几个问题</span></a></li></ol>
+                    </div>
+                
+
+                
+                <section id="post-body">
+                    <h2 id="资源准备"><a href="#资源准备" class="headerlink" title="资源准备"></a>资源准备</h2><p>Eclipse for Mac<br>Android SDK mac<br>Android NDK mac<br>coco2d-x source Code  </p>
+<h2 id="依次"><a href="#依次" class="headerlink" title="依次"></a>依次</h2><ol>
+<li><p>安装Eclipse</p>
+</li>
+<li><p>安装CDT</p>
+<p> C++ Development Tools，直接在Eclipse，Help-&gt;Install New SoftWare中载入、安装。</p>
+</li>
+<li><p>安装Android SDK</p>
+<p> 下载的安装包解压到自己指定的目录，打开sdk目录/tools/android，会启动Android SDK Manager，下载一个版本的SDK安装即可。</p>
+<p> 插曲:感谢伟大的GFW，一般来说这个下载是会卡住连不上的。改hosts，加入:</p>
+<pre><code> 74.125.237.1 dl-ssl.google.com</code></pre>
+</li>
+<li><p>解压Android NDK</p>
+<p> 配置环境变量</p>
+<p> 需要配置的环境变量如下:</p>
+<pre><code> export ANDROID_SDK_ROOT=&quot;你的sdk目录&quot;
+ export ANDROID_NDK_ROOT=&quot;你的ndk目录&quot;
+ export COCOS2DX_ROOT=&quot;你的cocos2d-x目录&quot;
+ export NDK_ROOT=&quot;你的ndk目录&quot;
+ export PATH=$PATH:$ANDROID_SDK_ROOT
+ export PATH=$PATH:$ANDROID_NDK_ROOT</code></pre>
+<p> 这里依照Unix环境配置方法，修改/etc/profile或.bash_profile，可能需要加权限，使用Emacs或其它编译器填写上面环境变量定义。重启Shell终端，让环境变量生效。</p>
+</li>
+<li><p>安装ADT<br> 同样Eclipse，Help-&gt;Install New SoftWare中，add新的Repository，地址为</p>
+<pre><code> https://dl-ssl.google.com/android/eclipse</code></pre>
+<p> 把pendding出来的包都装上就OK。</p>
+</li>
+</ol>
+<h2 id="环境安装配置完成"><a href="#环境安装配置完成" class="headerlink" title="环境安装配置完成"></a>环境安装配置完成</h2><p>现在应该可以正常调试、创建Android项目了，测试一下，没问题向下。</p>
+<h3 id="编译cocos2d-x工程"><a href="#编译cocos2d-x工程" class="headerlink" title="编译cocos2d-x工程"></a>编译cocos2d-x工程</h3><p>去cocos2d-x目录下的HelloWorld，终端cd到 你的cocos2d目录/samples/HelloCpp/proj.android。</p>
+<p>终端./build_native.sh执行编译脚本，编译C++代码，复制资源。正常编译完成后，JNI调用C++的.so库就编译出来了。</p>
+<p>Eclipse中创建已存在工程，选择这个proj.android目录。OK，正常的话就可以调试了。</p>
+<p>到Project-&gt;properties-&gt;Java Compiler，把Compiler compliance level从默认值（应该是1.5）改成1.6即可。</p>
+<h2 id="创建和调试"><a href="#创建和调试" class="headerlink" title="创建和调试"></a>创建和调试</h2><h3 id="Android调试"><a href="#Android调试" class="headerlink" title="Android调试"></a>Android调试</h3><p>因为Android模拟器不支持OpenGL ES 2.0，所以模拟器调试cocos2d-x的工程是不行的。4.1的模拟器也不可以。直接真机调试就可以了。</p>
+<h4 id="创建新的Android工程"><a href="#创建新的Android工程" class="headerlink" title="创建新的Android工程"></a>创建新的Android工程</h4><p>cd到COCOS2DX_ROOT目录，终端执行create-android-project.sh脚本。</p>
+<p>按提示依次输入:</p>
+<pre><code>bundle id
+SDK id
+project name</code></pre>
+<p>新的工程就创建到当前目录了，同样cd到proj.android目录，执行build_native.sh进行编译后，导入Eclipse。</p>
+<p><strong>jni目录下的Android.mk</strong></p>
+<p>cocos2d-x工程代码文件或目录有添加时，一定要修改Android.mk的LOCAL_SRC_FILES和LOCAL_C_INCLUDES值。否则新的文件不会被编译。</p>
+<h2 id="iOS、Android跨平台，共用Classes、Resources工程配置"><a href="#iOS、Android跨平台，共用Classes、Resources工程配置" class="headerlink" title="iOS、Android跨平台，共用Classes、Resources工程配置"></a>iOS、Android跨平台，共用Classes、Resources工程配置</h2><p>以上都能正常操作，Android开发环境的搭建工作就完成了。但是，如果你就这样iOS代码放一堆，Android代码放一堆开发的话，切来切去非常麻烦，而且很可能搞错，搭建共用Classes和Resources目录的工程才是王道。</p>
+<p>不要怕，这其实非常非常的简单。</p>
+<p>2012.08.30发布的新版cocos2d-x源码做这件事情很便捷，Android工程中的的build_native.sh脚本已经把资源、文件路径改为相对路径，不需要修改脚本就可以完成这任务。</p>
+<p>主要步骤如下:</p>
+<ol>
+<li>XCode创建iOS工程，因为有项目模板非常方便，不做说明。</li>
+<li>按如上操作创建新的同名Android工程</li>
+<li>把Android工程中的proj.android文件夹直接复制到iOS工程的Classes、Resources、ios、libs目录。</li>
+<li>执行build_native.sh脚本，完成编译。</li>
+</ol>
+<h2 id="几个问题"><a href="#几个问题" class="headerlink" title="几个问题"></a>几个问题</h2><ol>
+<li><p>Resources目录中不要分子目录，这在iOS平台没什么影响，但是Android上会找不到资源。</p>
+</li>
+<li><p>记得修改Android工程，jni目录中的Android.mk文件。</p>
+</li>
+<li><p>如何把XCode中完成的工程移植到Andriod?</p>
+<p> 这是个大问题，但也并不麻烦，需要细心。只需要:按照如上步骤正常的配置好Android环境。注意上面两个问题。分析编译过程中的错误log，修改部分代码。耐心调试，一点一点完成移植。</p>
+</li>
+</ol>
+
+                </section>
+
+                
+                
+                
+
+            </article>
+
+            
+            <nav class="dis_flex al_post_nav">
+                <a class="al_post_nav_item dis_flex_acenter" href="/2012/09/04/2012-09-04-doxygen-usage/">
+                    
+                        <svg class="al_arrow">
+                            <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-arrow-left"></use>
+                        </svg>
+                        <span class="al_text_ellipsis al_post_nav_desc">Doxygen代码文档生成工具的使用方法</span>
+                    
+                </a>
+                <a class="al_post_nav_item dis_flex_acenter" href="/2012/08/28/2012-08-28-helloworld/">
+                    
+                        <span class="al_text_ellipsis al_post_nav_desc">总算是开通了个人网站，HelloWorld!</span>
+                        <svg class="al_arrow">
+                            <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-arrow-right"></use>
+                        </svg>
+                    
+                </a>
+            </nav>
+        </div>
+    </div>
+
+
+        <div class="al_index_footer dis_flex_center">
+    <div class="al_index_footer_item al_index_footer_title">
+        John Doe
+    </div>
+
+    
+    
+
+    <div class="al_index_footer_item al_index_footer_extra">
+        Created By 
+        <a target="_blank" rel="noopener" href="https://github.com/iGuan7u/Acetolog">AcetoLog</a>
+         · Power By 
+        <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>
+    </div>
+
+    <div class="al_index_footer_item al_index_footer_extra_right">
+        All Right Reserved
+    </div>
+</div>
+
+        <script type="text/javascript" async="async" src="/javascripts/acelog.js"></script>
+        
+        
+        
+        
+    </body>
+</html>
+        

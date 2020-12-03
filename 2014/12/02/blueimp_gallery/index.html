@@ -1,0 +1,235 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>blueimp Gallery开源的Web图片浏览效果</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2.0">
+<link rel="stylesheet", href="/./css/style.css">
+<link rel="shortcut icon", href="/./favicon.ico">
+<link rel="apple-touch-icon", href="/./apple-touch-icon.png">
+
+        
+    
+    <link rel='stylesheet' href="/./css/dracula.css">
+
+    <meta name="generator" content="Hexo 5.2.0"></head>
+    <body>
+        <header class="al_header al_pos_fixed">
+    <div class="al_header_container dis_flex_jcenter">
+        <div class="al_header_container_left">
+            <div class="al_header_site_title">
+                <a href="/">Hexo</a>
+            </div>
+        </div>
+
+        <div class="dis_flex_jcenter">
+            <div class="al_header_setting">
+                <svg class="al_header_icon">
+                    <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-menu"></use>
+                </svg>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="al_sidebar">
+
+    <div class="al_sidebar_overlay al_full_cover"></div>
+
+    <div class="al_pos_fixed al_sidebar_cnt">
+        <div class="dis_flex_acenter al_sidebar_header">
+            <h3>Hexo</h3>
+            <div class="al_sidebar_close al_header_setting">
+                <svg class="al_header_icon">
+                    <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-close"></use>
+                </svg>
+            </div>
+        </div>
+
+        <div class="al_sidebar_author_cnt">
+
+            <div class="al_sidebar_author_info">
+                <h4>John Doe</h4>
+                <img class="al_sidebar_avatar" src="https://yourAvatorURL">
+                <p></p>
+            </div>
+
+            
+        </div>
+    </div>
+</div>
+
+        
+    <div class="dis_flex_center al_lightbox_cnt al_full_cover">
+        <img class="al_lightbox_img"/>
+    </div>
+    <div class="al_page_background dis_flex_center al_full_cover"></div>
+    <div class="al_page_container">
+        <div class="al_pos_ab al_fake_background"></div>
+        <div class="al_main_container al_shadow al_main_page_container">
+            <article class="al_article">
+                <header>
+                    <h1 class="al_page_title">
+                        blueimp Gallery开源的Web图片浏览效果
+                    </h1>
+                    <div class="al_page_info dis_flex">
+                        <div class="al_page_content_info">
+                            December 02, 2014 06:12 AM
+                        </div>
+
+                        
+
+                        
+                        <span class="tags"></span>
+                    </div>
+                </header>
+
+                
+                    <div class="al_page_content_outline">
+                        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-text">使用方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E6%88%90%E5%88%B0Ghost"><span class="toc-text">集成到Ghost</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E6%B7%BB%E5%8A%A0%E5%9B%BE%E7%89%87%E5%88%97%E8%A1%A8%E4%BB%A3%E7%A0%81-Mac%E7%8E%AF%E5%A2%83"><span class="toc-text">快速添加图片列表代码(Mac环境)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%A9%E7%95%A5%E5%9B%BE"><span class="toc-text">缩略图</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%88%E6%9E%9C%E5%B1%95%E7%A4%BA"><span class="toc-text">效果展示</span></a></li></ol>
+                    </div>
+                
+
+                
+                <section id="post-body">
+                    <p>对Markdown默认的图片显示效果不满意，尤其显示宽度小于高度的照片时，整个文章的排版显示不舒服；如果打算连续显示多张大小不一的图片，那效果更是糟糕的一塌糊涂。所以，加入一个第三方图片浏览是很有必要的！！</p>
+<p>Github搜索找到了blueimp Gallery，star,fork比较高搜索结果排名第一。简单测试后，发现非常容易使用，并且效果不错！</p>
+<p><img src="http://ghost3k.qiniudn.com/img/blueGallery_lightbox.png" alt="blueimp Gallery"></p>
+<p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/blueimp/Gallery#requirements">https://github.com/blueimp/Gallery#requirements</a></p>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><p>非常简单，看项目README很快可以搞定，我使用的是Lightbox效果，配置步骤：</p>
+<ol>
+<li><p>把css,img,js目录copy到网站存储。</p>
+</li>
+<li><p>网页头引入样式：</p>
+<pre><code> &lt;link rel=&quot;stylesheet&quot; href=&quot;css/blueimp-gallery.min.css&quot;&gt;</code></pre>
+</li>
+<li><p>将代码段落加入网页body中：</p>
+<pre><code> &lt;!-- The Gallery as lightbox dialog, should be a child element of the document body --&gt;
+ &lt;div id=&quot;blueimp-gallery&quot; class=&quot;blueimp-gallery&quot;&gt;
+     &lt;div class=&quot;slides&quot;&gt;&lt;/div&gt;
+     &lt;h3 class=&quot;title&quot;&gt;&lt;/h3&gt;
+     &lt;a class=&quot;prev&quot;&gt;‹&lt;/a&gt;
+     &lt;a class=&quot;next&quot;&gt;›&lt;/a&gt;
+     &lt;a class=&quot;close&quot;&gt;×&lt;/a&gt;
+     &lt;a class=&quot;play-pause&quot;&gt;&lt;/a&gt;
+     &lt;ol class=&quot;indicator&quot;&gt;&lt;/ol&gt;
+ &lt;/div&gt;</code></pre>
+</li>
+<li><p>在body底部加入：</p>
+<pre><code> &lt;script src=&quot;js/blueimp-gallery.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+</li>
+<li><p>上述代码后面加入script，处理点击事件：</p>
+<pre><code> &lt;script&gt;
+ document.getElementById(&#39;links&#39;).onclick = function (event) &#123;
+     event = event || window.event;
+     var target = event.target || event.srcElement,
+         link = target.src ? target.parentNode : target,
+         options = &#123;index: link, event: event&#125;,
+         links = this.getElementsByTagName(&#39;a&#39;);
+     blueimp.Gallery(links, options);
+ &#125;;
+ &lt;/script&gt;</code></pre>
+</li>
+<li><p>最后，创建图片列表即可（注意，最好使用大小相同的缩略图）</p>
+<pre><code> &lt;div id=&quot;links&quot;&gt;
+     &lt;a href=&quot;images/banana.jpg&quot; title=&quot;Banana&quot;&gt;
+         &lt;img src=&quot;images/thumbnails/banana.jpg&quot; alt=&quot;Banana&quot;&gt;
+     &lt;/a&gt;
+     &lt;a href=&quot;images/apple.jpg&quot; title=&quot;Apple&quot;&gt;
+         &lt;img src=&quot;images/thumbnails/apple.jpg&quot; alt=&quot;Apple&quot;&gt;
+     &lt;/a&gt;
+     &lt;a href=&quot;images/orange.jpg&quot; title=&quot;Orange&quot;&gt;
+         &lt;img src=&quot;images/thumbnails/orange.jpg&quot; alt=&quot;Orange&quot;&gt;
+     &lt;/a&gt;
+ &lt;/div&gt;</code></pre>
+</li>
+</ol>
+<p>还有其它的样式和配置项可选，具体内容可参考项目README。</p>
+<h2 id="集成到Ghost"><a href="#集成到Ghost" class="headerlink" title="集成到Ghost"></a>集成到Ghost</h2><p>我采用了非常简单粗暴的方式，将2，3，4，5的代码直接加入到<code>post.hbs</code>、<code>default.hbs</code>等模版。在需要的地方添加图片列表代码即可。</p>
+<h3 id="快速添加图片列表代码-Mac环境"><a href="#快速添加图片列表代码-Mac环境" class="headerlink" title="快速添加图片列表代码(Mac环境)"></a>快速添加图片列表代码(Mac环境)</h3><p>利用<code>ThisService</code>，写了一个简单的自动生成代码的脚本做为服务，之后在KeyBoard设置中为该服务绑定快捷键。</p>
+<p>只需要按一次快捷键，再修改图片链接即可。</p>
+<blockquote>
+<p>欢迎提出更便捷的方法</p>
+</blockquote>
+<h3 id="缩略图"><a href="#缩略图" class="headerlink" title="缩略图"></a>缩略图</h3><p>我使用七牛云存储做为图片空间，七牛的数据处理功能可以完美解决这一问题。只需创建一个图片样式，定义好剪裁方式、大小、图片质量、格式。最后，通过：</p>
+<pre><code>http://绑定域名/文件名称 + 分隔符 + 处理样式名
+如：http://space.qiniudn.com/sample.jpg/style.com.jpg</code></pre>
+<p>的方式，即可得到缩略图。</p>
+<h2 id="效果展示"><a href="#效果展示" class="headerlink" title="效果展示"></a>效果展示</h2><div class="BGallery">
+    <a target="_blank" rel="noopener" href="http://ghost3k.qiniudn.com/matrix.jpg" title="Matrix">
+        <img src="http://ghost3k.qiniudn.com/matrix.jpg-test" alt="Matrix">
+    </a>
+    <a target="_blank" rel="noopener" href="http://ghost3k.qiniudn.com/img/rivertown.jpg" title="River Town">
+        <img src="http://ghost3k.qiniudn.com/img/rivertown.jpg-test" alt="River Town">
+    </a>
+    <a target="_blank" rel="noopener" href="http://ghost3k.qiniudn.com/imgshangpala.jpg" title="ShangPala">
+        <img src="http://ghost3k.qiniudn.com/imgshangpala.jpg-test" alt="ShangPala">
+    </a>
+    <a target="_blank" rel="noopener" href="http://ghost3k.qiniudn.com/img/Yunnan.JPG" title="YunNan">
+        <img src="http://ghost3k.qiniudn.com/img/Yunnan.JPG-test" alt="YunNan">
+    </a>
+    <a target="_blank" rel="noopener" href="http://ghost3k.qiniudn.com/image/3/26/c252e66b67e3425950c2ee97b7a4a.jpg" title="The Hobbit">
+        <img src="http://ghost3k.qiniudn.com/image/3/26/c252e66b67e3425950c2ee97b7a4a.jpg-test" alt="The Hobbit">
+    </a>
+</div>
+
+                </section>
+
+                
+                
+                
+
+            </article>
+
+            
+            <nav class="dis_flex al_post_nav">
+                <a class="al_post_nav_item dis_flex_acenter" href="/2014/12/11/learn-sketch/">
+                    
+                        <svg class="al_arrow">
+                            <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-arrow-left"></use>
+                        </svg>
+                        <span class="al_text_ellipsis al_post_nav_desc">学画记录</span>
+                    
+                </a>
+                <a class="al_post_nav_item dis_flex_acenter" href="/2014/11/02/rivercity/">
+                    
+                        <span class="al_text_ellipsis al_post_nav_desc">《江城》随笔</span>
+                        <svg class="al_arrow">
+                            <use xmlns="http://www.w3.org/2000/svg" xlink:href="/assets/svg_icons.svg#svg-arrow-right"></use>
+                        </svg>
+                    
+                </a>
+            </nav>
+        </div>
+    </div>
+
+
+        <div class="al_index_footer dis_flex_center">
+    <div class="al_index_footer_item al_index_footer_title">
+        John Doe
+    </div>
+
+    
+    
+
+    <div class="al_index_footer_item al_index_footer_extra">
+        Created By 
+        <a target="_blank" rel="noopener" href="https://github.com/iGuan7u/Acetolog">AcetoLog</a>
+         · Power By 
+        <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>
+    </div>
+
+    <div class="al_index_footer_item al_index_footer_extra_right">
+        All Right Reserved
+    </div>
+</div>
+
+        <script type="text/javascript" async="async" src="/javascripts/acelog.js"></script>
+        
+        
+        
+        
+    </body>
+</html>
+        
