@@ -84,12 +84,12 @@ export default hopeTheme({
     },
   },
 
-  encrypt: {
-    config: {
-      "/demo/encrypt.html": ["1234"],
-      "/en/demo/encrypt.html": ["1234"],
-    },
-  },
+  // encrypt: {
+  //   config: {
+  //     "/demo/encrypt.html": ["1234"],
+  //     "/en/demo/encrypt.html": ["1234"],
+  //   },
+  // },
 
   plugins: {
     blog: true,
